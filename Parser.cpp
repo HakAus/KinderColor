@@ -17,6 +17,7 @@ std::vector<Country> Parser::loadCountries(const char * pFileName)
         //std::cout << path->Attribute("id") << std::endl;
         Country* country = new Country(path->Attribute("id"),path->Attribute("data-name"));
         country->setMapPoints(path->Attribute("d"));
+        country->showMapPoints();
         path = path->NextSiblingElement();
     }
     return countries;
