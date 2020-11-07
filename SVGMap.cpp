@@ -4,6 +4,11 @@
 
 int main()
 {
-    Parser::loadCountries("world.svg");
+    std::vector<Country*> a = Parser::loadCountries("world.svg");
+    vector::iterator i;
+    for (i = a.begin(); i < a.end(); i++)
+    {
+    	cout << (*i).id << endl;
+    }
     return 0;
 }

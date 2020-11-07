@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
-#include <string.h>
+#include <string>
 #include <tuple>
 using namespace tinyxml2;
