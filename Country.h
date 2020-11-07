@@ -3,7 +3,8 @@
 
 class Country
 {
-	
+private:
+
 	const char* id;
 	const char* name;
 	std::vector<std::tuple<float, float>> mapPoints;
