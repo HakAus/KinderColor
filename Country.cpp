@@ -9,32 +9,30 @@ Country::Country(const char* pId, const char* pName)
 void Country::setMapPoints(const char* pSvgPath)
 {
 	std::tuple<float, float> currentPoint;
-	char* path = _strdup(pSvgPath);
-	char* nextToken = NULL;
+	char* path = strdup(pSvgPath);
+	rsize_t strmax = sizeof path;
 	const char* delimiter = " ";
-	char* token = strtok_s(path,delimiter,&nextToken);
-	int counter = 0;//Se puede cambiar por algo mas eficiente
-	while (token) {//TODO:Revisar el orden de los ifs
-		if (counter == 1)
-		{
-			currentPoint = getTupleFloatValue(token);	//Toma el punto despues de m y lo inserta en la tupla
-			this->mapPoints.push_back(currentPoint);
+	char* nextToken;
+	char* token = strtok(path,delimiter);
+	currentPoint = {0.0, 0.0};
+	while (token) {
+		if (!isalpha(*token)){
+			currentPoint = tuppleAddition(currentPoint, getTupleFloatValue(token));
+			this->mapPoints.push_back(currentPoint);	//Guarda el valor de la tupla del token + el valor actual
 		}
-		else {
-			if (*token != 'z' && *token != 'm') {
-				this->mapPoints.push_back(tuppleAddition(currentPoint, getTupleFloatValue(token)));	//Guarda el valor de la tupla del token + el valor actual
-			}
-		}
-		token = strtok_s(NULL," ", &nextToken);
-		counter++;
+		token = strtok(NULL,delimiter);
 	}
 }
 
 std::tuple<float, float> Country::getTupleFloatValue(char* pToken) {
-	char* nextToken = NULL;
-	char* token = strtok_s(pToken, ",", &nextToken);
-	float firstValue = atof(token);
-	float secondValue = atof(nextToken);
+	std::string token = pToken;
+	size_t comma = token.find_first_of(",");	// Distancia desde el inicio hasta la primera coma.
+	std::string firstString = token.substr(0, comma);
+	std::string secondString = token.substr(comma+1);	// Se pone mas uno para saltar la coma.
+	std::cout << firstString << std::endl;
+	std::cout << secondString << std::endl;
+	float firstValue = stof(firstString);
+	float secondValue = stof(secondString);
 	return std::tuple<float, float>(firstValue, secondValue);
 }
 
@@ -47,6 +45,7 @@ void Country::showMapPoints()
 	std::cout << name << " Points: " << std::endl;
 	for (int i = 0; i < mapPoints.size();i++) {
 		std::tuple<float, float> currentTuple = mapPoints[i];
-		std::cout << "Point: (" << std::get<0>(currentTuple) << "," << std::get<1>(currentTuple) << ")" << std::endl;
+		std::cout << "Point: (" << std::get<0>(currentTuple) << "," << std::get<1>(currentTuple) << ") ";
 	}
+	std::cout << std::endl;
 }

@@ -6,6 +6,6 @@ class Parser
 {
 public:
 	Parser();
-	static std::vector<Country> loadCountries(const char* pFileName);
+	static std::vector<Country*> loadCountries(const char* pFileName);
 };
 

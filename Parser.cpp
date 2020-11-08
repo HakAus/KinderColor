@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include "CoordinateSystem.h"
 
 Parser::Parser()
 {
@@ -15,6 +16,7 @@ std::vector<Country*> Parser::loadCountries(const char * pFileName)
         Country* country = new Country(path->Attribute("id"),path->Attribute("data-name"));
         country->setMapPoints(path->Attribute("d"));
         country->showMapPoints();
+        countries.push_back(country);
         path = path->NextSiblingElement();
     }
     return countries;
