@@ -1,11 +1,11 @@
 #pragma once
 #include "Includes.h"
-#include "Country.h"
+#include "coordinatesystem.h"
 
 class Parser
 {
 public:
 	Parser();
-	static std::vector<Country> loadCountries(const char* pFileName);
+	static void loadCountries(const char* pFileName,CoordinateSystem * pCoordinateSystem);
 };
 

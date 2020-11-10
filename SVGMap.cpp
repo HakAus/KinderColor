@@ -4,6 +4,8 @@
 
 int main()
 {
-    Parser::loadCountries("world.svg");
+    //Esto pertenece al maapa
+    CoordinateSystem* cs = new CoordinateSystem();
+    Parser::loadCountries("world.svg",cs);
     return 0;
 }
