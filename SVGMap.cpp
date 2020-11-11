@@ -17,6 +17,7 @@ char* xd(char* pChar, char pDelimiter, char* pContext)
         {
             workChar[index] = '\0';
             pContext = &charCopy[index + 1];
+            std::cout << pContext;
         }
         index++;
     }
