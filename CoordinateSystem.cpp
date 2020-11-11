@@ -20,9 +20,8 @@ void CoordinateSystem::setCountryInSquares(const char* pSvgPath, const char * pI
 	const char* delimiter = " ";
 	vector<string>tokens = Utilities::split(pSvgPath, ' ');
 	int counter = 0;
-	std::cout <<pId<<endl<< tokens.size()<<endl;
+	std::cout << pId << endl;
 	while (counter < tokens.size()) {
-		std::cout << counter;
 		string token = tokens[counter];
 		if (counter == 1)
 		{
@@ -30,7 +29,7 @@ void CoordinateSystem::setCountryInSquares(const char* pSvgPath, const char * pI
 			addToSquareHash(currentPoint,pId);
 		}
 		else {
-			if (token != "z" && token != "m") {
+			if (isdigit(token.c_str()[0])) {
 				addToSquareHash(tuppleAddition(currentPoint, getTupleFloatValue(token)), pId);//Aca se hace el calculo del x y y de la matriz imaginaria
 			}
 		}
@@ -43,7 +42,9 @@ void CoordinateSystem::addToSquareHash(std::tuple<int, int>, const char * pId) {
 }
 
 std::tuple<float, float> CoordinateSystem::getTupleFloatValue(std::string pToken) {
+	std::cout << pToken<<endl;
 	vector<string> tokens = Utilities::split(pToken.c_str(), ',');
+	std::cout << tokens.size()<<endl;
 	float firstValue = atof(tokens[0].c_str());
 	float secondValue = atof(tokens[1].c_str());
 	return std::tuple<float, float>(firstValue, secondValue);
