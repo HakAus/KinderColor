@@ -1,8 +1,10 @@
+#pragma once
 #include <unordered_map>
-#include "Country.h"
+#include <string>
+#include <set>
+#include <iostream>
 #include "Square.h"
-
-using namespace std; 
+#include "WorldData.h"
 
 class CoordinateSystem
 {
@@ -10,11 +12,11 @@ private:
 	float interval;
 	float width;
 	float height;
-	unordered_map<Square*,string> SquareHash;
+	std::unordered_multimap<const char*,const char*> SquareHash;
 
 public:
-	CoordinateSystem();
-	void updateSquares(Country * pCountry);
+	CoordinateSystem(float pInterval, WorldData * pWorldData);
+	void updateSquares(std::vector<Country*> pCountries);
 	void setFrame(float pWidth, float pHeight);
 	void setInterval(float pInterval);
 

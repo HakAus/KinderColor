@@ -18,7 +18,13 @@ void Country::setMapPoints(const char* pSvgPath)
 	while (token) {
 		if (!isalpha(*token)){
 			currentPoint = tuppleAddition(currentPoint, getTupleFloatValue(token));
-			this->mapPoints.push_back(currentPoint);	//Guarda el valor de la tupla del token + el valor actual
+			int column = (int) std::get<0>(point)/interval;
+			int row = (int) std::get<1>(point)/interval;
+			std::string coordinates = "(" +std::to_string(column) + "," + std::to_string(row) + ")";
+			std::pair<const char*,const char*> countryInSquare (coordinates.c_str(),country->getId());
+			std::cout << countryInSquare.first << ", " << countryInSquare.second << std::endl;
+			SquareHash.insert(countryInSquare);
+			//this->mapPoints.push_back(currentPoint);	//Guarda el valor de la tupla del token + el valor actual
 		}
 		token = strtok(NULL,delimiter);
 	}
@@ -29,8 +35,6 @@ std::tuple<float, float> Country::getTupleFloatValue(char* pToken) {
 	size_t comma = token.find_first_of(",");	// Distancia desde el inicio hasta la primera coma.
 	std::string firstString = token.substr(0, comma);
 	std::string secondString = token.substr(comma+1);	// Se pone mas uno para saltar la coma.
-	std::cout << firstString << std::endl;
-	std::cout << secondString << std::endl;
 	float firstValue = stof(firstString);
 	float secondValue = stof(secondString);
 	return std::tuple<float, float>(firstValue, secondValue);
@@ -48,4 +52,13 @@ void Country::showMapPoints()
 		std::cout << "Point: (" << std::get<0>(currentTuple) << "," << std::get<1>(currentTuple) << ") ";
 	}
 	std::cout << std::endl;
+}
+
+std::vector<std::tuple<float, float>> Country::getMapPoints()
+{
+	return this->mapPoints;
+}
+const char* Country::getId()
+{
+	return this->id;
 }

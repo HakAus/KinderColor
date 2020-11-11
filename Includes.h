@@ -8,4 +8,5 @@
 #include <cstring> 
 #include <tuple>
 #include <cctype>
+using namespace std; 
 using namespace tinyxml2;
