@@ -19,6 +19,6 @@ public:
 	void setCountries(std::vector<Country* > pCountries);
 	void setCountryInSquares(const char* pSvgPath,const char * pId);
 	void addToSquareHash(std::tuple<int, int>, const char* pId);
-	std::tuple<float, float> getTupleFloatValue(char* pToken);
+	std::tuple<float, float> getTupleFloatValue(std::string pToken);
 	std::tuple<float, float> tuppleAddition(std::tuple<float, float> pFirstSum, std::tuple<float, float> pSecondSum);
 };
