@@ -5,9 +5,11 @@ Parser::Parser()
 {
 }
 
-WorldData * Parser::loadCountries(const char * pFileName)
+
+//Envia los datos de las dimensiones y setea la lista de paises al sistema de coordenadas
+void Parser::loadCountries(const char* pFileName, CoordinateSystem* pCoordinateSystem)
 {
-    std::unordered_map<Country*> countries;
+    std::vector<Country*>  countries;
     XMLDocument worldFile;
     worldFile.LoadFile(pFileName);
     XMLElement* svg = worldFile.FirstChildElement();
@@ -18,12 +20,43 @@ WorldData * Parser::loadCountries(const char * pFileName)
 
     CoordinateSystem * cs = new CoordinateSystem();
     while (path != NULL) {
-        Country* country = new Country(path->Attribute("id"),path->Attribute("data-name"));
-        cs->setMapPoints(path->Attribute("d"));
-        // country->showMapPoints();
-
-        countries.push_back(country);
+        counter++;
+        const char * id = path->Attribute("id");
+        Country* country = new Country(id,path->Attribute("data-name"));
+        pCoordinateSystem->setCountryInSquares(path->Attribute("d"),id);
         path = path->NextSiblingElement();
     }
-    return new WorldData (width,height,countries);
+   // pCoordinateSystem->setCountries(countries);
+    
+}
+
+char* Parser::copyChar(const char* pChar)
+{
+    char* copy = NULL;
+    int index = 0;
+    while (pChar[index]) {
+        copy[index] = pChar[index];
+        index++;
+    }
+    return copy;
+}
+
+char * Parser::splitChar(char* pChar, char pDelimiter, char* pContext)
+{
+    char* charCopy = pChar;
+    char* workChar = NULL;
+    int index = 0;
+    while (charCopy[index]) {
+        if (charCopy[index] != pDelimiter) 
+        {
+            workChar[index] = charCopy[index];
+        }
+        else 
+        {
+            workChar[index] = NULL;
+            pContext = &charCopy[index + 1];
+        }
+        index++;
+    }
+    return workChar;
 }

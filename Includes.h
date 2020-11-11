@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
-#include <string>
-#include <cstring> 
+#include <string.h>
+#include <set>
 #include <tuple>
 #include <cctype>
 using namespace std; 
