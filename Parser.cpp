@@ -17,7 +17,7 @@ void Parser::loadCountries(const char* pFileName, CoordinateSystem* pCoordinateS
     int height = stoi(svg->Attribute("height"));
     std::cout << "w: " << width << " h: " << height << std::endl;
     XMLElement* path = svg->FirstChildElement("path");
-
+    int counter = 0;
     CoordinateSystem * cs = new CoordinateSystem();
     while (path != NULL) {
         counter++;
@@ -53,7 +53,7 @@ char * Parser::splitChar(char* pChar, char pDelimiter, char* pContext)
         }
         else 
         {
-            workChar[index] = NULL;
+            workChar[index] = '\0';
             pContext = &charCopy[index + 1];
         }
         index++;
