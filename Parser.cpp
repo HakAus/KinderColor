@@ -20,6 +20,37 @@ void Parser::loadCountries(const char* pFileName, CoordinateSystem* pCoordinateS
         pCoordinateSystem->setCountryInSquares(path->Attribute("d"),id);
         path = path->NextSiblingElement();
     }
-    pCoordinateSystem->setCountries(countries);
+   // pCoordinateSystem->setCountries(countries);
     
+}
+
+char* Parser::copyChar(const char* pChar)
+{
+    char* copy = NULL;
+    int index = 0;
+    while (pChar[index]) {
+        copy[index] = pChar[index];
+        index++;
+    }
+    return copy;
+}
+
+char * Parser::splitChar(char* pChar, char pDelimiter, char* pContext)
+{
+    char* charCopy = pChar;
+    char* workChar = NULL;
+    int index = 0;
+    while (charCopy[index]) {
+        if (charCopy[index] != pDelimiter) 
+        {
+            workChar[index] = charCopy[index];
+        }
+        else 
+        {
+            workChar[index] = NULL;
+            pContext = &charCopy[index + 1];
+        }
+        index++;
+    }
+    return workChar;
 }

@@ -10,16 +10,16 @@ CoordinateSystem::CoordinateSystem()
 
 void CoordinateSystem::setCountries(std::vector<Country*> pCountries)
 {
-	countries = pCountries;
+	//countries = pCountries;
 }
 
 //Para cada punto crear un set
 void CoordinateSystem::setCountryInSquares(const char* pSvgPath, const char * pId) {
 	std::tuple<float, float> currentPoint;
-	char* path = _strdup(pSvgPath);
+	char* path = _strdup(pSvgPath);//Copia el string para que no sea const
 	char* nextToken = NULL;
 	const char* delimiter = " ";
-	char* token = strtok_s(path, delimiter, &nextToken);
+	char* token = strtok_s(path, delimiter, &nextToken);//Separa en tokens por espacio en blanco
 	int counter = 0;
 	while (token) {
 		if (counter == 1)

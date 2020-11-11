@@ -11,7 +11,7 @@ private:
 	float interval;
 	float width;
 	float height;
-	unordered_map<std::tuple<int,int>,std::set<const char*>> squareHash;
+	//unordered_map<std::tuple<int,int>,std::set<const char*>> squareHash;
 	std::vector<Country*> countries;
 
 public:
