@@ -20,9 +20,8 @@ void CoordinateSystem::setCountryInSquares(const char* pSvgPath, const char * pI
 	const char* delimiter = " ";
 	vector<string>tokens = Utilities::split(pSvgPath, ' ');
 	int counter = 0;
-	//std::cout <<pId<<endl<< tokens.size()<<endl;
+	std::cout << pId << endl;
 	while (counter < tokens.size()) {
-		//std::cout << counter; 
 		string token = tokens[counter];
 		if (counter == 1)
 		{
@@ -42,7 +41,9 @@ void CoordinateSystem::addToSquareHash(std::tuple<int, int>, const char * pId) {
 	//Se agrega el key al hash creando un set para el valor entrante,si ya existe el key entonces mete el id al set
 }
 std::tuple<float, float> CoordinateSystem::getTupleFloatValue(std::string pToken) {
+	std::cout << pToken<<endl;
 	vector<string> tokens = Utilities::split(pToken.c_str(), ',');
+	std::cout << tokens.size()<<endl;
 	float firstValue = atof(tokens[0].c_str());
 	float secondValue = atof(tokens[1].c_str());
 	return std::tuple<float, float>(firstValue, secondValue);
