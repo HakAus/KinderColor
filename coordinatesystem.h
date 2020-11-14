@@ -25,5 +25,6 @@ public:
 	std::string getSquare(std::tuple<float, float> pCurrentPoint, int pInterval);
 	void printSquareData();
 	void printCountryData();
+	void printCountryColor();
 	void addCountry(Country * pCountry);
 };

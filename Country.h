@@ -18,13 +18,15 @@ private:
 	string name;
 	unordered_map<string, Country*> neighbors;
 	string color;
-
-
+	int conections;//Se puede agregar un campo conexiones que se modifica mientras avanza el algoritmo lo que hace que se reoordenen los ponderados
+	
 public:
 	Country(string pId, string pName);
 	void addNeighbor(Country* pNeighbor);
 	void addNeighborAux(Country* pNeighbor);
 	void setColor(string pColor);
+	string getColor();
 	string getId();
 	unordered_map<string, Country*> getNeighbors();
+	void calculateWeight();
 };

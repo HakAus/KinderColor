@@ -108,3 +108,11 @@ void CoordinateSystem::printCountryData()
         std::cout << "]" << std::endl;
     }
 }
+
+void CoordinateSystem::printCountryColor()
+{
+    for (auto pair : countryHash)
+    {
+        pair.second->getColor();
+    }
+}

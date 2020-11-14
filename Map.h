@@ -21,6 +21,7 @@ public:
 
 	//void setStrategy(string pStrategy);
 	void setColorAmount(int pColorAmount);
-	void prepareToPaint();//Esto se corre antes del metodo paint que usa el strategy
-
+	void rotatePallete();
+	set<Country> prepareToPaint();//Esto se corre antes del metodo paint que usa el strategy
+	void paint();
 };
