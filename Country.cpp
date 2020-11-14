@@ -17,6 +17,16 @@ void Country::addNeighborAux(Country * pNeighbor)
 	this->neighbors[pNeighbor->getId()] = pNeighbor;
 }
 
+void Country::setColor(string pColor)
+{
+	this->color = pColor;
+}
+
+string Country::getColor()
+{
+	return this->color;
+}
+
 unordered_map<string, Country*> Country::getNeighbors()
 {
 	return this->neighbors;

@@ -7,13 +7,12 @@ Parser::Parser()
 
 
 //Envia los datos de las dimensiones y setea la lista de paises al sistema de coordenadas
-void Parser::loadCountries(const char* pFileName, CoordinateSystem* pCoordinateSystem)
+ void Parser::loadCountries(const char* pFileName, CoordinateSystem* pCoordinateSystem, XMLDocument * pWorldFile)
 {
     std::vector<Country*>  countries;
-    XMLDocument worldFile;
-    worldFile.LoadFile(pFileName);
+    pWorldFile->LoadFile(pFileName);
     std::cout << "Cargo el SVG" << std::endl;
-    XMLElement* svg = worldFile.FirstChildElement();
+    XMLElement* svg = pWorldFile->FirstChildElement();
     int width = stoi(svg->Attribute("width"));
     int height = stoi(svg->Attribute("height"));
     std::cout << "w: " << width << " h: " << height << std::endl;
@@ -28,8 +27,5 @@ void Parser::loadCountries(const char* pFileName, CoordinateSystem* pCoordinateS
         pCoordinateSystem->setCountryInSquares(path->Attribute("d"), country, 5);
         path = path->NextSiblingElement();
     }
-    //pCoordinateSystem->printSquareData();
-    pCoordinateSystem->printCountryData();
-    
 }
 

@@ -7,6 +7,6 @@ class Parser
 public:
 	Parser();
 
-	static void loadCountries(const char* pFileName,CoordinateSystem * pCoordinateSystem);
+	static void loadCountries(const char* pFileName,CoordinateSystem * pCoordinateSystem, XMLDocument * pWorldFile);
 };
 
