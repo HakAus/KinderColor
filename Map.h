@@ -9,7 +9,7 @@ private:
 	CoordinateSystem* coordinateSystem;
 	int colorAmount;
 	string pallete[3] = { "FF4533","47FF33","F6FF33" };
-	//Painter* painter;
+	//Painter painter;
 	//Strategy currentStrategy;
 public:
 	Map() {
@@ -22,6 +22,6 @@ public:
 	//void setStrategy(string pStrategy);
 	void setColorAmount(int pColorAmount);
 	void rotatePallete();
-	set<Country> prepareToPaint();//Esto se corre antes del metodo paint que usa el strategy
+	vector<Country> prepareToPaint();//Esto se corre antes del metodo paint que usa el strategy
 	void paint();
 };

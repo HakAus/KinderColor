@@ -8,5 +8,6 @@
 #include <set>
 #include <tuple>
 #include <cctype>
+#include<algorithm>
 using namespace std; 
 using namespace tinyxml2;

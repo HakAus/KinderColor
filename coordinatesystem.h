@@ -27,4 +27,5 @@ public:
 	void printCountryData();
 	void printCountryColor();
 	void addCountry(Country * pCountry);
+	vector<Country> prepareToPaint();
 };

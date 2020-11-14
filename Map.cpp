@@ -17,8 +17,9 @@ void Map::rotatePallete()
 	}
 }
 
-set<Country> Map::prepareToPaint()
+set<Country> Map::prepareToPaint()//Decidir si el vector sera un atributo de mapa o solo se pasara de un metodo al otro
 {
+	return coordinateSystem->prepareToPaint();
 	for (paises:HashPaises) {
 		asignarPeso();
 		meterAlVector();

@@ -25,8 +25,10 @@ public:
 	void addNeighbor(Country* pNeighbor);
 	void addNeighborAux(Country* pNeighbor);
 	void setColor(string pColor);
+	int getConections();
+	void setConections();
+	void setConections(int pConections);
 	string getColor();
 	string getId();
 	unordered_map<string, Country*> getNeighbors();
-	void calculateWeight();
 };

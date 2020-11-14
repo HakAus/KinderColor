@@ -22,6 +22,21 @@ void Country::setColor(string pColor)
 	this->color = pColor;
 }
 
+int Country::getConections()
+{
+	return conections;
+}
+
+void Country::setConections()
+{
+	this->conections = this->neighbors.size();
+}
+
+void Country::setConections(int pConections)
+{
+	this->conections = pConections;
+}
+
 string Country::getColor()
 {
 	return this->color;
