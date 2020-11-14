@@ -51,7 +51,7 @@ void CoordinateSystem::addCountry(Country * pCountry)
     countryHash[pCountry->getId()] = pCountry;
 }
 
-vector<Country> CoordinateSystem::prepareToPaint()//Se iba a calcular un ponderado, pero se usara nada mas su numero de conexiones
+vector<Country*> CoordinateSystem::prepareToPaint()//Se iba a calcular un ponderado, pero se usara nada mas su numero de conexiones
 {//Empiezo a creer que no es necesario un hash para indexar pues se ira pintando secuencialmente,Basta con el hash dentro de los paises,Se puede transformar el hash de sistema de coordenadas a un vector para evitar este paso
     vector<Country*> countries;//Ordenado por numero de conexiones
     for (auto pair : countryHash)
@@ -60,6 +60,7 @@ vector<Country> CoordinateSystem::prepareToPaint()//Se iba a calcular un pondera
         countries.push_back(pair.second);
     }
     sort(countries.begin(), countries.end(), &comparator);
+    return countries;
 }
 
 void CoordinateSystem::addToSquareHash(std::string pSquareKey, Country* pCountry) 

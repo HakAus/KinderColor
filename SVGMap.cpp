@@ -7,5 +7,6 @@
 int main()
 {
     Map* map = new Map();
+    map->start();
     return 0;
 }
