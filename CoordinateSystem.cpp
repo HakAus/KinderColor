@@ -42,24 +42,73 @@ void CoordinateSystem::setCountryInSquares(const char* pSvgPath, Country* pCount
     } while (0 != *pSvgPath++);
 }
 
-bool comparator(Country* pFirstCountry, Country* pSecondCountry) {
+bool connectionsComparator(Country* pFirstCountry, Country* pSecondCountry) {
     return pFirstCountry->getConections() < pSecondCountry->getConections();
 }//No estoy seguro de donde deberia ir esta funcion
 
+bool squareComparator(string pFirstSquare, string pSecondSquare)
+{
+    // La implementacion de esto se puede mejorar 
+    float x1 = 0.0;
+    float y1 = 0.0;
+    float x2 = 0.0;
+    float y2 = 0.0;
+    string buffer;
+    for (char character : pFirstSquare)
+    {
+        if (character == ','){
+            // cout << buffer << endl;
+            x1 = stof(buffer);
+            buffer = "";
+        }
+        if (isdigit(character) || character == '-' || character == '-'){
+            buffer += character;
+        }
+    }
+    // cout << buffer << endl;
+    y1 = stof(buffer);
+    buffer = "";
+
+    for (char character : pSecondSquare)
+    {
+        if (character == ','){
+            // cout << buffer << endl;
+            x2 = stof(buffer);
+            buffer = "";
+        }
+        if (isdigit(character) || character == '-' || character == '-'){
+            buffer += character;
+        }
+    }
+    // cout << buffer << endl;
+    y2 = stof(buffer);
+
+    if (x1 < x2)
+        return true;
+    else if (x1 == x2)
+        return y1 <= y2;
+    else
+        return false;
+}
 void CoordinateSystem::addCountry(Country * pCountry)
 {
     countryHash[pCountry->getId()] = pCountry;
 }
 
-vector<Country*> CoordinateSystem::prepareToPaint()//Se iba a calcular un ponderado, pero se usara nada mas su numero de conexiones
+vector<string> CoordinateSystem::prepareToPaint()//Se iba a calcular un ponderado, pero se usara nada mas su numero de conexiones
 {//Empiezo a creer que no es necesario un hash para indexar pues se ira pintando secuencialmente,Basta con el hash dentro de los paises,Se puede transformar el hash de sistema de coordenadas a un vector para evitar este paso
-    vector<Country*> countries;//Ordenado por numero de conexiones
-    for (auto pair : countryHash)
+    vector<string> countries;//Ordenado por numero de conexiones
+    for (auto pair : squareHash)
     {
-        pair.second->setConections();//Se hace para tener un control en el numero de conexiones para el algoritmo de programacion dinamica
-        countries.push_back(pair.second);
+        countries.push_back(pair.first);
     }
-    sort(countries.begin(), countries.end(), &comparator);
+    sort(countries.begin(), countries.end(), &squareComparator);
+
+    cout << "Coordenadas ordenadas" << endl;
+    for (auto str : countries)
+    {
+        cout << str << endl;
+    }
     return countries;
 }
 
@@ -97,8 +146,10 @@ std::tuple<float, float> CoordinateSystem::tuppleAddition(std::tuple<float, floa
 
 void CoordinateSystem::printSquareData()
 {
+    int squareCount = 0;
     for (auto pair : squareHash)
     {
+        squareCount++;
         if ((pair.second).size() > 1)
         {
             std::cout << pair.first << "[";
@@ -109,6 +160,7 @@ void CoordinateSystem::printSquareData()
             std::cout << "]" << std::endl;
         } 
     }
+    cout << "Total squares: " << squareCount << endl;
 }
 
 

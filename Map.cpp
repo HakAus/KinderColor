@@ -17,7 +17,7 @@ void Map::rotatePallete()
 	}
 }
 
-vector<Country*> Map::prepareToPaint()//Decidir si el vector sera un atributo de mapa o solo se pasara de un metodo al otro
+vector<string> Map::prepareToPaint()//Decidir si el vector sera un atributo de mapa o solo se pasara de un metodo al otro
 {
 	return coordinateSystem->prepareToPaint();
 	// for (auto paises : HashPaises) {
