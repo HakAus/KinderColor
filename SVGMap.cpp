@@ -2,12 +2,13 @@
 //
 #include "Parser.h"
 #include <cctype>
+#include <iostream>
 
 int main()
 {
     //Esto pertenece al maapa
-    CoordinateSystem* cs = new CoordinateSystem();
-    Parser::loadCountries("world.svg",cs);
+    CoordinateSystem* coordinateSystem = new CoordinateSystem();
+    Parser::loadCountries("world.svg",coordinateSystem);
 
     return 0;
 }

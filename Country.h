@@ -5,14 +5,26 @@
 #include <cctype>
 #include <string>
 #include <iostream>
+#include <unordered_map>
+
+
+using namespace std;
 
 class Country
 {
 private:
 
-	const char* id;
-	const char* name;
+	string id;
+	string name;
+	unordered_map<string, Country*> neighbors;
+	string color;
+
 
 public:
-	Country(const char* pId, const char* pName);
+	Country(string pId, string pName);
+	void addNeighbor(Country* pNeighbor);
+	void addNeighborAux(Country* pNeighbor);
+	void setColor(string pColor);
+	string getId();
+	unordered_map<string, Country*> getNeighbors();
 };
