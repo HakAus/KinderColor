@@ -66,6 +66,11 @@ vector<Country *> CoordinateSystem::prepareToPaint()
     return countries;
 }
 
+void CoordinateSystem::metodoFeoPaint()
+{
+    Painter::paintWorld(countryHash);
+}
+
 void CoordinateSystem::addToSquareHash(std::string pSquareKey, Country* pCountry) 
 {   
 	squareHash[pSquareKey].insert(pCountry->getId());

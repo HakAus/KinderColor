@@ -2,6 +2,7 @@
 
 ColorBucket::ColorBucket(std::string pColor)
 {
+	cout << pColor;
 	bucketColor = pColor;
 }
 

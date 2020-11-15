@@ -54,6 +54,7 @@ vector<Country *> Map::prepareToPaint()//Decidir si el vector sera un atributo d
 void Map::paint()
 {
 	currentStrategy->execute(prepareToPaint(),pallete);
+	coordinateSystem->metodoFeoPaint();
 }
 
 //Se crea un vector de paises(X)

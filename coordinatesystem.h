@@ -1,5 +1,6 @@
 #include <unordered_map>
 #include "Country.h"
+#include "Painter.h"
 #include "Includes.h"
 
 using namespace std; 
@@ -28,4 +29,5 @@ public:
 	void printCountryColor();
 	void addCountry(Country * pCountry);
 	vector<Country *> prepareToPaint();
+	void metodoFeoPaint();
 };
