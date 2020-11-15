@@ -4,6 +4,7 @@ Country::Country(string pId, string pName)
 {
 	this->id = pId;
 	this->name = pName;
+	this->color = "#f2f2f2";//Se puede hacer un hash de colores para manejarlos por key (Tipo diccionario)
 }
 
 void Country::addNeighbor(Country * pNeighbor)
