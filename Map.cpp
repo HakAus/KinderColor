@@ -17,18 +17,14 @@ void Map::rotatePallete()
 	}
 }
 
-set<Country> Map::prepareToPaint()//Decidir si el vector sera un atributo de mapa o solo se pasara de un metodo al otro
+vector<Country *> Map::prepareToPaint()//Decidir si el vector sera un atributo de mapa o solo se pasara de un metodo al otro
 {
 	return coordinateSystem->prepareToPaint();
-	for (paises:HashPaises) {
-		asignarPeso();
-		meterAlVector();
-	}
 }
 
-void Map::paint()
+void Map::paint(vector<Country*> pCountries)
 {
-	//currentStrategy.paint();
+	//currentStrategy.paint(pCountries);
 }
 
 //Se crea un vector de paises
