@@ -25,6 +25,10 @@ void CoordinateSystem::setCountryInSquares(const char* pSvgPath, Country* pCount
         const char* begin = pSvgPath;
         const char* comma = NULL;
 
+	// Una M mayuscula indica un pnuto de referencia con valores absolutos
+        // por lo tanto se tiene que reiniciar el acumulador currentPoint
+        if (*pSvgPath == 'M')    
+            currentPoint = {0.0,0.0};
         while (isdigit(*pSvgPath) || *pSvgPath == '.' || *pSvgPath == '-' || *pSvgPath == ','){
         	if (*pSvgPath == ',')
         		comma = pSvgPath;
