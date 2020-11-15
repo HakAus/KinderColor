@@ -5,6 +5,7 @@
 #include "Painter.h"
 
 class Map {
+
 private:
 	XMLDocument* worldFile;
 	CoordinateSystem* coordinateSystem;
@@ -19,7 +20,6 @@ public:
 		Parser::loadCountries("world.svg", coordinateSystem, worldFile);
 		this->painter = new Painter(worldFile);
 		prepareToPaint();
-		this->painter->paintCountry("CR","#FF4533");
 		// this->coordinateSystem->printCountryData();
 		// this->coordinateSystem->printSquareData();
 	}
@@ -27,7 +27,7 @@ public:
 	//void setStrategy(string pStrategy);
 	void setColorAmount(int pColorAmount);
 	void rotatePallete();
-	vector<string> prepareToPaint();//Esto se corre antes del metodo paint que usa el strategy
+	vector<tuple<string,set<Country*>>> prepareToPaint();//Esto se corre antes del metodo paint que usa el strategy
 	void paint();
 	void start();
 };

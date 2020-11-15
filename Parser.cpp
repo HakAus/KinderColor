@@ -24,7 +24,7 @@ Parser::Parser()
         string name = std::string(path->Attribute("data-name"));
         Country * country = new Country(id, name);
         pCoordinateSystem->addCountry(country);
-        pCoordinateSystem->setCountryInSquares(path->Attribute("d"), country, 5);
+        pCoordinateSystem->setCountryInSquares(path->Attribute("d"), country, 10);
         path = path->NextSiblingElement();
     }
 }

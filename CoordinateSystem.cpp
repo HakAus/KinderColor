@@ -25,13 +25,20 @@ void CoordinateSystem::setCountryInSquares(const char* pSvgPath, Country* pCount
         const char* begin = pSvgPath;
         const char* comma = NULL;
 
-        while (isdigit(*pSvgPath) || *pSvgPath == '.' || *pSvgPath == '-' || *pSvgPath == ','){
+        // Una M mayuscula indica un pnuto de referencia con valores absolutos
+        // por lo tanto se tiene que reiniciar el acumulador currentPoint
+        if (*pSvgPath == 'M')    
+            currentPoint = {0.0,0.0};
+
+        while (isdigit(*pSvgPath) || *pSvgPath == '.' || *pSvgPath == '-' || *pSvgPath == ',')
+        {
         	if (*pSvgPath == ',')
         		comma = pSvgPath;
             pSvgPath++;
             valueFound = true;
         }
-        if (valueFound){
+        if (valueFound)
+        {
         	newPoint = getTupleFloatValue(begin,comma,pSvgPath);
         	currentPoint = tuppleAddition(currentPoint, newPoint);
         	square = getSquare(currentPoint, pInterval);
@@ -46,7 +53,7 @@ bool connectionsComparator(Country* pFirstCountry, Country* pSecondCountry) {
     return pFirstCountry->getConections() < pSecondCountry->getConections();
 }//No estoy seguro de donde deberia ir esta funcion
 
-bool squareComparator(string pFirstSquare, string pSecondSquare)
+bool squareComparator(tuple<string,set<Country*>> pFirstSquare, tuple<string,set<Country*>> pSecondSquare)
 {
     // La implementacion de esto se puede mejorar 
     float x1 = 0.0;
@@ -54,7 +61,7 @@ bool squareComparator(string pFirstSquare, string pSecondSquare)
     float x2 = 0.0;
     float y2 = 0.0;
     string buffer;
-    for (char character : pFirstSquare)
+    for (char character : get<0>(pFirstSquare))
     {
         if (character == ','){
             // cout << buffer << endl;
@@ -69,7 +76,7 @@ bool squareComparator(string pFirstSquare, string pSecondSquare)
     y1 = stof(buffer);
     buffer = "";
 
-    for (char character : pSecondSquare)
+    for (char character : get<0>(pSecondSquare))
     {
         if (character == ','){
             // cout << buffer << endl;
@@ -95,33 +102,43 @@ void CoordinateSystem::addCountry(Country * pCountry)
     countryHash[pCountry->getId()] = pCountry;
 }
 
-vector<string> CoordinateSystem::prepareToPaint()//Se iba a calcular un ponderado, pero se usara nada mas su numero de conexiones
-{//Empiezo a creer que no es necesario un hash para indexar pues se ira pintando secuencialmente,Basta con el hash dentro de los paises,Se puede transformar el hash de sistema de coordenadas a un vector para evitar este paso
-    vector<string> countries;//Ordenado por numero de conexiones
+vector<tuple<string,set<Country*>>> CoordinateSystem::prepareToPaint()
+{
+    vector<tuple<string,set<Country*>>> countries;
     for (auto pair : squareHash)
     {
-        countries.push_back(pair.first);
+        countries.push_back(make_tuple(pair.first,pair.second));
     }
     sort(countries.begin(), countries.end(), &squareComparator);
 
-    cout << "Coordenadas ordenadas" << endl;
-    for (auto str : countries)
+    for (auto tup : countries)
     {
-        cout << str << endl;
+        cout << get<0>(tup) << "= [";
+        for (auto country : get<1>(tup))
+        {
+            cout << country->getId() << " ";
+        }
+        cout << "]" << endl;
     }
+
+    cout << "Primero: " << get<0>(*countries.begin()) << endl;
+    vector<tuple<string,set<Country*>>>::iterator it;
+    it = countries.end();
+    it--;
+    cout << "Ultimo: " << get<0>(*it) << endl;
     return countries;
 }
 
 void CoordinateSystem::addToSquareHash(std::string pSquareKey, Country* pCountry) 
 {   
-	squareHash[pSquareKey].insert(pCountry->getId());
+	squareHash[pSquareKey].insert(pCountry);
     if (squareHash[pSquareKey].size() > 1)
     {
-        set<string>::iterator itr;
+        set<Country*>::iterator itr;
         for (itr = squareHash[pSquareKey].begin(); itr != squareHash[pSquareKey].end(); itr++)
         {
-            if (*itr != pCountry->getId())
-                countryHash[*itr]->addNeighbor(pCountry); // agrega en pareja 
+            if ((*itr)->getId() != pCountry->getId())
+                countryHash[(*itr)->getId()]->addNeighbor(pCountry); // agrega en pareja 
         }
     }
 }   

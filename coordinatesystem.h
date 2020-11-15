@@ -11,7 +11,7 @@ private:
 	float interval;
 	float width;
 	float height;
-	unordered_map<string,set<string>> squareHash;
+	unordered_map<string,set<Country*>> squareHash;
 	unordered_map<string, Country*> countryHash;
 	vector<Country*> countries;
 
@@ -30,7 +30,7 @@ public:
 	void addCountry(Country * pCountry);
 
 	// Painting
-	vector<string> prepareToPaint();
+	vector<tuple<string,set<Country*>>> prepareToPaint();
 
 	// Debug
 	void printSquareData();
