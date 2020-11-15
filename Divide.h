@@ -6,6 +6,7 @@
 class Divide:public Strategy {
 	vector<ColorBucket*> buckets;
 public:
-	void execute(vector<Country*>pCountries,string pColorPallete[]);
-	bool findBucket(Country * pCountry);
+	void execute(vector<Country*>pCountries, vector<string> pColorPallete);
+	void findBucket(Country * pCountry);
+	int paintedCountries();
 };

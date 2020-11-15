@@ -9,9 +9,9 @@ private:
 	XMLDocument* worldFile;
 	CoordinateSystem* coordinateSystem;
 	int colorAmount;
-	string pallete[3] = { "FF4533","47FF33","F6FF33" };
+	vector<string> pallete = { "FF4533","47FF33","F6FF33" };
 	//Painter painter;
-	Strategy currentStrategy;
+	Strategy * currentStrategy;
 	int alreadyPainted;
 public:
 	Map();
