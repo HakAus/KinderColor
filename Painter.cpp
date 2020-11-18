@@ -31,3 +31,33 @@ void Painter::paintCountry(string pCountryId, string pColor)
 	}
 	worldFile->SaveFile("world.svg");
 }
+
+void Painter::paintCountries(vector<Country *> pCountries)
+{
+	XMLElement * svgRoot = this->worldFile->FirstChildElement();
+	XMLElement * ptrPaths = svgRoot->FirstChildElement("path");
+	while (ptrPaths != nullptr)
+	{
+		string value;
+		const char * idAttribute = nullptr;
+		idAttribute = ptrPaths->Attribute("id");
+		if (idAttribute != nullptr)
+		{	
+			string id = string(idAttribute);
+			for (const auto& country : pCountries)
+			{
+				if (country->getId() == id)
+				{
+					string color = "fill:" + country->getColor() + ";fill-rule:evenodd";
+					ptrPaths->SetAttribute("style",color.c_str());
+					break;
+				}
+			}			
+			ptrPaths = ptrPaths->NextSiblingElement("path");
+		}
+		else {
+			cout << "ERROR en lectura de SVG" << endl;
+		}
+	}
+	worldFile->SaveFile("world.svg");
+}

@@ -37,6 +37,16 @@ void Country::setConections(int pConections)
 	this->conections = pConections;
 }
 
+vector<string> Country::getRestrictedColors()
+{
+	return this->restrictedColors;
+}
+
+void Country::addColorRestriction(string pColorCode)
+{
+	this->restrictedColors.push_back(pColorCode);
+}
+
 string Country::getColor()
 {
 	return this->color;
@@ -45,6 +55,11 @@ string Country::getColor()
 unordered_map<string, Country*> Country::getNeighbors()
 {
 	return this->neighbors;
+}
+
+string Country::getName()
+{
+	return this->name;
 }
 
 string Country::getId()

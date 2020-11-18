@@ -9,5 +9,8 @@
 #include <tuple>
 #include <cctype>
 #include <algorithm>
+#include <map>
+#include <cmath>
+#include <stack>
 using namespace std; 
 using namespace tinyxml2;

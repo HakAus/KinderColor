@@ -102,15 +102,31 @@ void CoordinateSystem::addCountry(Country * pCountry)
     countryHash[pCountry->getId()] = pCountry;
 }
 
-vector<tuple<string,set<Country*>>> CoordinateSystem::prepareToPaint()
+vector<Country *> CoordinateSystem::prepareToPaint()
 {
-    vector<tuple<string,set<Country*>>> countries;
+    vector<tuple<string,set<Country*>>> countriesXSquare;
     for (auto pair : squareHash)
     {
-        countries.push_back(make_tuple(pair.first,pair.second));
+        countriesXSquare.push_back(make_tuple(pair.first,pair.second));
     }
-    sort(countries.begin(), countries.end(), &squareComparator);
+    sort(countriesXSquare.begin(), countriesXSquare.end(), &squareComparator);
 
+    set<Country *> verificationCountries;
+    vector<Country *> countries;
+    
+    for (const auto& tup : countriesXSquare)
+    {
+        for (const auto& country : get<1>(tup))
+        {
+            const bool exists = verificationCountries.find(country) != verificationCountries.end();
+            if (!exists) 
+            {
+                verificationCountries.insert(country);
+                countries.push_back(country);
+            }
+        }
+    }
+    /* PRINT
     for (auto tup : countries)
     {
         cout << get<0>(tup) << "= [";
@@ -126,6 +142,7 @@ vector<tuple<string,set<Country*>>> CoordinateSystem::prepareToPaint()
     it = countries.end();
     it--;
     cout << "Ultimo: " << get<0>(*it) << endl;
+    */
     return countries;
 }
 

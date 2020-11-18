@@ -17,7 +17,7 @@ void Map::rotatePallete()
 	}
 }
 
-vector<tuple<string,set<Country*>>> Map::prepareToPaint()//Decidir si el vector sera un atributo de mapa o solo se pasara de un metodo al otro
+vector<Country *> Map::prepareToPaint()//Decidir si el vector sera un atributo de mapa o solo se pasara de un metodo al otro
 {
 	return coordinateSystem->prepareToPaint();
 	// for (auto paises : HashPaises) {
@@ -47,6 +47,20 @@ void Map::start() // TODO: Validacion de input
 				cout << "(3) Programacion dinamica" << endl;
 				cin >> strategy;
 				
+				int chosenStrategy = stoi(strategy);
+				switch(chosenStrategy)
+				{
+					case 1:
+						break;
+					case 2:
+						currentStrategy = new Divide();
+						currentStrategy->execute(prepareToPaint(), colorAmount);
+						break;
+					case 3:
+						break;
+					default:
+						break;
+				}
 				cout << "WORK IN PROGRESS" << endl;
 				strategy = "s";
 			}

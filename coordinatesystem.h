@@ -30,7 +30,7 @@ public:
 	void addCountry(Country * pCountry);
 
 	// Painting
-	vector<tuple<string,set<Country*>>> prepareToPaint();
+	vector<Country *> prepareToPaint();
 
 	// Debug
 	void printSquareData();
