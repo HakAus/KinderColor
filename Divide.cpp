@@ -24,8 +24,21 @@ void Divide::execute(vector<Country*> pCountries, vector<string> pColorPallete)/
 
 void Divide::findBucket(Country* pCountry)//Se puede cambiar a pasar todos los posibles por el primer bucket y recorrer 3 veces el vector de paises
 {//TODO:Discutir esto
-	if (buckets[currentBucket]->tryBucket(pCountry))//Se agrega este segmento de codigo para dar oportunidad a todos los colores de aparecer en el mapa
-		nextColor();//Esta agregado en el codigo hace que el argumento sea menos eficiente para pocos colores puesto que prioriza el variar colores que la cantidad de pintados
+	if (currentBucket < buckets.size())
+		if (buckets[currentBucket]->tryBucket(pCountry))
+			currentBucket++;
+		else {
+			for (const auto& bucket : buckets) {//Esto esta muy feo
+				if (bucket->tryBucket(pCountry))
+					break;
+			}
+		}
+	else {
+		for (const auto& bucket : buckets) {//Para el Dynamic, por aca deberia ir el reordenamiento de los paises y recalculo de conexiones
+			if (bucket->tryBucket(pCountry))
+				break;
+		}
+	}
 }
 
 int Divide::paintedCountries()
