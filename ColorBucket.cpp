@@ -41,3 +41,13 @@ int ColorBucket::getBucketSize()
 {
 	return bucketCountries.size();
 }
+
+int ColorBucket::getBucketRestrictionSize()
+{
+	return bucketRestrictions.size();
+}
+
+int ColorBucket::getBucketWeight()
+{
+	return getBucketSize() + getBucketRestrictionSize();
+}

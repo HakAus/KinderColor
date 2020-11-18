@@ -16,4 +16,6 @@ public:
 	void addToBucketRestrictions(unordered_map<string, Country*> pRestrictions);
 	void addToBucketCountries(Country * pCountry);
 	int getBucketSize();
+	int getBucketRestrictionSize();
+	int getBucketWeight();
 };

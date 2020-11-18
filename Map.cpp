@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "Divide.h"
+#include "Dynamic.h"
 
 Map::Map()
 {
@@ -10,7 +11,7 @@ Map::Map()
 	coordinateSystem->prepareToPaint();
 	colorAmount = 3;
 	alreadyPainted = 0;
-	currentStrategy = new Divide();
+	currentStrategy = new Dynamic();
 }
 
 Map::Map(string pStrategy, int pColorAmount)
