@@ -53,6 +53,11 @@ bool Country::isColored()
 	return color != "#f2f2f2";
 }
 
+void Country::unPaint()
+{
+	setColor("#f2f2f2");
+}
+
 string Country::getId()
 {
 	return id;
