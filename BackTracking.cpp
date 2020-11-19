@@ -13,6 +13,7 @@ void BackTracking::bruteForce(vector<Country*> pVector, std::vector<Country*>::i
 	if (currentIterator != pVector.end())
 	{
 		Country* currentCountry = *currentIterator;
+		cout << currentCountry->getId()<<endl;
 		for (const auto& color : colorPallete)
 		{
 			if (!endOfAlgorithm) {
@@ -31,7 +32,7 @@ void BackTracking::bruteForce(vector<Country*> pVector, std::vector<Country*>::i
 			cout << "Llega al primero";
 			Country* current2 = *pFirstCountry;
 			cout << current2->getId();
-			pVector.erase(std::remove(pVector.begin(), pVector.end(), triggeredBackTracking));//Aca
+			pVector.erase(std::remove(pVector.begin(), pVector.end(), triggeredBackTracking));
 			cout << pVector.size();
 			triggeredBackTracking = NULL;
 			bruteForce(pVector, pFirstCountry);
@@ -55,3 +56,6 @@ void BackTracking::tryToPaint(Country* pCountry, string color)//Podia ser un met
 	else 
 		pCountry->unPaint();
 }
+//No hay una buena distribucion de colores
+//El algoritmo dura demasiado o falla con 4 colores, seguramente al aumento de pruebas del ciclo
+//Puede que se necesite una poda mas significativa
