@@ -51,3 +51,6 @@ ColorBucket* Dynamic::findOptimalBucket()
 	}
 	return lowestBucket;
 }
+
+
+

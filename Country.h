@@ -31,4 +31,5 @@ public:
 	string getColor();
 	string getId();
 	unordered_map<string, Country*> getNeighbors();
+	bool canColor(string pColor);
 };

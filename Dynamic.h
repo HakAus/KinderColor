@@ -14,3 +14,4 @@ public:
 	int paintedCountries();
 	ColorBucket* findOptimalBucket();
 };
+
