@@ -48,14 +48,9 @@ unordered_map<string, Country*> Country::getNeighbors()
 	return this->neighbors;
 }
 
-bool Country::canColor(string pColor)
+bool Country::isColored()
 {
-	bool sameColor = false;
-	for (neighbor:neighbors) {
-		if (neighbor.getColor() == getColor())
-			sameColor = true;
-	}
-	return sameColor;
+	return color != "#f2f2f2";
 }
 
 string Country::getId()

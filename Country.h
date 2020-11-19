@@ -18,7 +18,7 @@ private:
 	string name;
 	unordered_map<string, Country*> neighbors;
 	string color;
-	int conections;//Se puede agregar un campo conexiones que se modifica mientras avanza el algoritmo lo que hace que se reoordenen los ponderados
+	int conections;
 	
 public:
 	Country(string pId, string pName);
@@ -31,5 +31,5 @@ public:
 	string getColor();
 	string getId();
 	unordered_map<string, Country*> getNeighbors();
-	bool canColor(string pColor);
+	bool isColored();
 };

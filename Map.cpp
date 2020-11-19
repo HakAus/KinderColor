@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "Divide.h"
 #include "Dynamic.h"
+#include "BackTracking.h"
 
 Map::Map()
 {
@@ -11,7 +12,7 @@ Map::Map()
 	coordinateSystem->prepareToPaint();
 	colorAmount = 3;
 	alreadyPainted = 0;
-	currentStrategy = new Dynamic();
+	currentStrategy = new BackTracking();
 }
 
 Map::Map(string pStrategy, int pColorAmount)
