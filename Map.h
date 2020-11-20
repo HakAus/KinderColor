@@ -3,13 +3,15 @@
 #include "Includes.h"
 #include "Parser.h"
 #include "Strategy.h"
+#include "Painter.h"
+#include "Observer.h"
 
-class Map {
+class Map : Observer{
 private:
 	XMLDocument* worldFile;
 	CoordinateSystem* coordinateSystem;
 	int colorAmount;
-	vector<string> pallete = { "#FF4533","#47FF33","#F6FF33","#d142f5"};
+	vector<string> pallete = { "#FF4533","#47FF33","#000000"};
 	Strategy * currentStrategy;
 	int alreadyPainted;
 public:
@@ -21,4 +23,8 @@ public:
 	void rotatePallete();
 	vector<Country *> prepareToPaint();//Esto se corre antes del metodo paint que usa el strategy
 	void paint();
+	void update();
 };
+
+//Poner al painter como un observable
+//Lo necesita el Strategy para que con el conteo que lleva

@@ -12,7 +12,7 @@ Map::Map()
 	coordinateSystem->prepareToPaint();
 	colorAmount = 3;
 	alreadyPainted = 0;
-	currentStrategy = new BackTracking();
+	currentStrategy = new Dynamic(this);
 }
 
 Map::Map(string pStrategy, int pColorAmount)
@@ -56,13 +56,10 @@ vector<Country *> Map::prepareToPaint()//Decidir si el vector sera un atributo d
 void Map::paint()
 {
 	currentStrategy->execute(prepareToPaint(),pallete);
-	coordinateSystem->metodoFeoPaint();
 }
 
-//Se crea un vector de paises(X)
-//Se pintaran los paises con mas ponderado(X)
-//No se pueden colorear con el mismo color paises vecinos()
-//Para divide y venceras se dividira el mapa por sectores de color y se haran despintes y rotaciones()
-	//{Mi N serian el numero de colores en el ques e dividira el mapa}
-//Para el prog dinamica se hara lo mismo pero en cada despinte se recalculara el ponderado por numero de conexiones disponibles
-//Para el backtracking simplemente se pintara en orden y se haran diferentes conmbinaciones de seleccion del primero pais para encontrar el mejor resultado
+void Map::update()
+{
+	coordinateSystem->paintProgress(currentStrategy->getFileName().c_str());
+}
+

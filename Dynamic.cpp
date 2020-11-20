@@ -1,8 +1,14 @@
 #include "Dynamic.h"
 
+Dynamic::Dynamic(Observer* pObserver)
+{
+	this->fileName = "WorldDynamic.svg";
+	this->observer = pObserver;
+}
+
 void Dynamic::execute(vector<Country*> pCountries, vector<string> pColorPallete)
 {
-	cout << "Trying to execute Dynamic" << endl;
+	cout << "Trying to execute" << endl;
 	int palleteSize = pColorPallete.size();
 	cout << pColorPallete.size();
 	for (int index = 0; index < palleteSize; index++)
@@ -10,47 +16,45 @@ void Dynamic::execute(vector<Country*> pCountries, vector<string> pColorPallete)
 		cout << "Creating buckets" << pColorPallete[index] << endl;
 		buckets.push_back(new ColorBucket(pColorPallete[index]));
 	}
-	for (const auto& country : pCountries) {//Cada k paises se puede meter la marca para pintar el mapa svg(Lazyness)
-		cout << "Finding buckets" << endl;
+	for (const auto& country : pCountries) 
+	{
 		findBucket(country);
 	}
-	for (const auto& bucket : buckets) {//Cada k paises se puede meter la marca para pintar el mapa svg(Lazyness)
+	for (const auto& bucket : buckets) 
+	{
 		bucket->showBucket();
 	}
-	cout << "Sin pintar: " << pCountries.size() - paintedCountries();
+	notify();
+	cout << "Sin pintar: " <<  unpaintedCountries(pCountries.size());
 }
 
 void Dynamic::findBucket(Country* pCountry)
 {
-	ColorBucket* optimalBucket = findOptimalBucket();
-	optimalBucket->tryBucket(pCountry);
-	for (const auto& bucket : buckets) {
-		if (bucket->tryBucket(pCountry))
-			break;
-	}
-}
-
-int Dynamic::paintedCountries()
-{
-	int sum = 0;
-	for (const auto& bucket : buckets) {
-		sum += bucket->getBucketSize();
-	}
-	return sum;
-}
-
-ColorBucket* Dynamic::findOptimalBucket()
-{
-	ColorBucket* lowestBucket = NULL;
-	for (const auto& bucket : buckets)
-	{
-		if (lowestBucket == NULL || lowestBucket->getBucketWeight() <= bucket->getBucketWeight())
+	if (buckets[currentBucket]->tryBucket(pCountry))//Se agrega este segmento de codigo para dar oportunidad a todos los colores de aparecer en el mapa
+		nextColor();//Esta agregado en el codigo hace que el argumento sea menos eficiente para pocos colores puesto que prioriza el variar colores que la cantidad de pintados
+	else {
+		for (const auto& bucket : buckets) 
 		{
-			lowestBucket = bucket;
+			if (bucket->tryBucket(pCountry))
+			{
+				if (paintedCountries % 10 == 0)
+					notify();
+				paintedCountries++;
+				break;
+			}
 		}
 	}
-	return lowestBucket;
 }
 
+int Dynamic::unpaintedCountries(int pVectorSize)
+{
+	return pVectorSize - paintedCountries;
+}
 
-
+void Dynamic::nextColor()
+{
+	if (currentBucket != buckets.size() - 1)
+		currentBucket++;
+	else
+		currentBucket = 0;
+}

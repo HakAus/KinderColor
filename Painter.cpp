@@ -1,4 +1,5 @@
 #include "Painter.h"
+#include "Utilities.h"
 
 Painter::Painter(XMLDocument * pWorldFile)
 {
@@ -32,9 +33,9 @@ void Painter::paintCountry(string pCountryId, string pColor)
 	worldFile->SaveFile("world.svg");
 }
 
-void Painter::paintWorld(unordered_map<string,Country*> pWorld)//Modo Chambon
+void Painter::paintWorld(unordered_map<string,Country*> pWorld,string  pFileName)//Modo Chambon
 {
-	cout << "Intendot pintar";
+	cout << "Pintando Archivo "<<pFileName <<endl;
 	XMLDocument * test = new XMLDocument();
 	test->LoadFile("worldTest.svg");
 	XMLElement* svgRoot = test->FirstChildElement();
@@ -56,5 +57,7 @@ void Painter::paintWorld(unordered_map<string,Country*> pWorld)//Modo Chambon
 			cout << "ERROR en lectura de SVG" << endl;
 		}
 	}
-	test->SaveFile("worldTest.svg");
+	char* fileName = &pFileName[0];
+	test->SaveFile(fileName);
 }
+

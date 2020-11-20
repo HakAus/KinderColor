@@ -1,5 +1,11 @@
 #include "BackTracking.h"
 
+BackTracking::BackTracking(Observer* pObserver)
+{
+	this->fileName = "WorldBackTracking.svg";
+	this->observer = pObserver;
+}
+
 void BackTracking::execute(vector<Country*> pCountries, vector<string> pColorPallete)
 {
 	colorPallete = pColorPallete;
@@ -8,16 +14,15 @@ void BackTracking::execute(vector<Country*> pCountries, vector<string> pColorPal
 	cout << "End";
 }
 
-void BackTracking::bruteForce(vector<Country*> pVector, std::vector<Country*>::iterator pFirstCountry) {
+void BackTracking::bruteForce(vector<Country*> pVector, std::vector<Country*>::iterator pFirstCountry/*Pasar los colores */) {
 	std::vector<Country*>::iterator currentIterator = pVector.begin();
 	if (currentIterator != pVector.end())
 	{
 		Country* currentCountry = *currentIterator;
-		cout << currentCountry->getId()<<endl;
 		for (const auto& color : colorPallete)
 		{
 			if (!endOfAlgorithm) {
-				tryToPaint(currentCountry, color);//Aca tengo un problema de recursion
+				tryToPaint(currentCountry, color);
 				if (currentCountry->isColored())
 				{
 					bruteForce(vector<Country*>(next(currentIterator), pVector.end()), pFirstCountry);

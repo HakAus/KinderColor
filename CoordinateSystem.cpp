@@ -70,9 +70,9 @@ vector<Country *> CoordinateSystem::prepareToPaint()
     return countries;
 }
 
-void CoordinateSystem::metodoFeoPaint()
+void CoordinateSystem::paintProgress(const char * pFileName)
 {
-    Painter::paintWorld(countryHash);
+    Painter::paintWorld(countryHash,pFileName);
 }
 
 void CoordinateSystem::addToSquareHash(std::string pSquareKey, Country* pCountry) 

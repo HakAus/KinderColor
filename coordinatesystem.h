@@ -5,7 +5,7 @@
 
 using namespace std; 
 
-class CoordinateSystem
+class CoordinateSystem 
 {
 private:
 
@@ -29,5 +29,5 @@ public:
 	void printCountryColor();
 	void addCountry(Country * pCountry);
 	vector<Country *> prepareToPaint();
-	void metodoFeoPaint();
+	void paintProgress(const char * pFileName);
 };
