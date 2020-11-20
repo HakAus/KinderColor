@@ -8,9 +8,7 @@ private:
 	XMLDocument * worldFile;
 
 public:
-
 	Painter(XMLDocument * pWorldFile);
-
 	void paintCountry(string pCountryId, string pColor);
-	void paintCountries(vector<Country *> pCountriesWithColors);
+	void paintCountries(vector<Country*> pCountriesWithColors);
 };

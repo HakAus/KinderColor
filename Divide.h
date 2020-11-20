@@ -4,17 +4,16 @@
 
 class Divide : public Strategy 
 {
-	// vector<vector<Country*>> countryBlocks;
+	
 	typedef vector<Country *>::iterator countryItr;
-	stack<pair<countryItr, countryItr>> sectionStack;
 	
 public:
 	void execute(vector<Country*>pCountries, int pColorAmount);
+	void setPainter(Painter* pPainter);
 
 	void divide(vector<Country*> pCountries, countryItr pStart, countryItr pEnd, int pColorAmount);
-	void conquer(vector<Country*> pCountries, countryItr pStart, countryItr pEnd, int pColorAmount);
-	vector<Country*> merge(vector<Country*> pCountries1, vector<Country*> pCountries2);
-
+	void conquer(vector<Country*> pCountries, int pColorAmount);
+	vector<Country*> merge(vector<vector<Country*>> pCountrySections);
 	void tryColor(Country* pCountry, int pColorAmount);
 
 };

@@ -34,8 +34,10 @@ void Painter::paintCountry(string pCountryId, string pColor)
 
 void Painter::paintCountries(vector<Country *> pCountries)
 {
+	cout << "Entro" << endl;
 	XMLElement * svgRoot = this->worldFile->FirstChildElement();
 	XMLElement * ptrPaths = svgRoot->FirstChildElement("path");
+	cout << "Aqui" << endl;
 	while (ptrPaths != nullptr)
 	{
 		string value;

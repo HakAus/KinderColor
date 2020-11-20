@@ -4,3 +4,7 @@
 void Strategy::execute(vector<Country*> pCountries, int pColorAmount)
 {
 }
+
+void Strategy::setPainter(Painter * pPainter)
+{
+}

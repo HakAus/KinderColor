@@ -48,18 +48,22 @@ void Map::start() // TODO: Validacion de input
 				cin >> strategy;
 				
 				int chosenStrategy = stoi(strategy);
-				switch(chosenStrategy)
-				{
-					case 1:
+				switch (chosenStrategy) {
+					case 1:{
 						break;
-					case 2:
+					}
+					case 2:{
 						currentStrategy = new Divide();
+						currentStrategy->setPainter(this->painter);
 						currentStrategy->execute(prepareToPaint(), colorAmount);
 						break;
-					case 3:
+					}
+					case 3:{
 						break;
-					default:
+					}
+					default:{
 						break;
+					}
 				}
 				cout << "WORK IN PROGRESS" << endl;
 				strategy = "s";

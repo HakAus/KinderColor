@@ -23,7 +23,6 @@ public:
 		this->coordinateSystem = new CoordinateSystem();
 		Parser::loadCountries("world.svg", coordinateSystem, worldFile);
 		this->painter = new Painter(worldFile);
-		prepareToPaint();
 		// this->coordinateSystem->printCountryData();
 		// this->coordinateSystem->printSquareData();
 	}

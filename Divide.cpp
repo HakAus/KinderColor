@@ -3,38 +3,58 @@
 void Divide::execute (vector<Country*> pCountries, int pColorAmount)
 {
 	divide(pCountries, pCountries.begin(), pCountries.end(), pColorAmount);
+
+	for (auto country : pCountries)
+	{
+		cout << country->getName() << ": " << country->getColor() << endl;
+	}
+	painter->paintCountries(pCountries);
 }
 
+void Divide::setPainter(Painter* pPainter)
+{
+	painter = pPainter;
+}
 void Divide::divide(vector<Country*> pCountries, countryItr pStart, countryItr pEnd, int pColorAmount)
 {
-
 	//211 / 3 = 70
-	int blockSize = distance(pStart,pEnd) / pColorAmount;
-	blockSize += distance(pStart,pEnd) % pColorAmount;
-
-	countryItr countryIterator;
-	countryIterator = pCountries.begin();
-
-	int blockCount = 0;
-
-	if (blockSize <= pColorAmount)
-		conquer(pCountries, pStart, pEnd, pColorAmount);
-		return;
-	while (blockCount < pColorAmount)
+	if (pCountries.size() <= pColorAmount)
 	{
-		int distanceToEnd = distance(countryIterator, pCountries.end());
-		cout << "Distance to end: " << distanceToEnd << endl;
-
-		countryItr begin = countryIterator;
-		if (distanceToEnd >= blockSize)
-			advance(countryIterator,blockSize);
-		else
-			advance(countryIterator,distanceToEnd);
-		sectionStack.push(make_pair(begin, countryIterator));
-		divide(pCountries, begin, countryIterator, pColorAmount);
-
-		blockCount++;
+		conquer(pCountries, pColorAmount);
 	}
+	else {
+		int blockSize = distance(pStart,pEnd) / pColorAmount;
+		blockSize += distance(pStart,pEnd) % pColorAmount;
+
+		countryItr countryIterator;
+		countryIterator = pCountries.begin();
+
+		int blockCount = 0;
+
+		vector<vector<Country*>> countries;
+		while (blockCount < pColorAmount)
+		{
+			int distanceToEnd = distance(countryIterator, pCountries.end());
+			// cout << "Distance to end: " << distanceToEnd << endl;
+
+			countryItr begin = countryIterator;
+			if (distanceToEnd >= blockSize)
+				advance(countryIterator,blockSize);
+			else
+				advance(countryIterator,distanceToEnd);
+			vector<Country*> countrySection(begin,countryIterator);
+			countries.push_back(countrySection);
+			blockCount++;
+		}
+		for (auto list : countries)
+		{
+			divide(list, list.begin(), list.end(),pColorAmount);
+		}
+	}
+	
+	// return merge(countries);
+
+	
 	/* PRINT
 	for (const auto& section : sections)
 	{
@@ -49,25 +69,29 @@ void Divide::divide(vector<Country*> pCountries, countryItr pStart, countryItr p
 		// cout << (*step)->getId();
 		cout << "]" << distance(begin,end) << endl;
 	}*/
-
 }
 
-void Divide::conquer(vector<Country*> pCountries, countryItr pStart, countryItr pEnd, int pColorAmount)
+void Divide::conquer(vector<Country*> pCountries, int pColorAmount)
 {
-	for (countryItr step = pStart; step != pEnd; step++)
+	for (auto country : pCountries)
 	{
-		tryColor((*pStart), pColorAmount);
+		tryColor(country, pColorAmount);
 	}
 }
 
 void Divide::tryColor(Country* pCountry, int pColorAmount)
 {
+	bool colorAssigned = false;
 	for (int colorIndex = 0; colorIndex < pColorAmount; colorIndex++)
 	{
 		vector<string>::iterator first = pCountry->getRestrictedColors().begin();
 		vector<string>::iterator last = pCountry->getRestrictedColors().end();
 		if (find(first,last, pallete[colorIndex]) == last)
-		{
+		{	
+			colorAssigned = true;
+			pCountry->setColor(pallete[colorIndex]);
+			// Significa que el color no esta en la lista de restricciones, entonces lo
+			// asigna a si mismo y lo agrega como restriccion a sus vecinos
 			unordered_map<string, Country*> neighbors = pCountry->getNeighbors();
 			for (auto neighbor : neighbors)
 			{
@@ -76,14 +100,26 @@ void Divide::tryColor(Country* pCountry, int pColorAmount)
 			break;
 		}
 	}
+	if (!colorAssigned)
+	{
+		pCountry->setColor("#FFFFFF");
+		// cout << pCountry->getName() << ": Color = #FFFFFF" << endl;
+	}
+
 }
 
-vector<Country*> Divide::merge(vector<Country*> pCountries1, vector<Country*> pCountries2)
+vector<Country*> Divide::merge(vector<vector<Country*>> pCountrySections)
 {
-	cout << "Ready for merge" << endl;
-	for (const auto& country : pCountries2)
-		pCountries1.push_back(country);
-	return pCountries1;
+	vector<Country*> countriesMerged;
+	for (auto list: pCountrySections)
+	{
+		for (auto country : list)
+		{
+			countriesMerged.push_back(country);
+		}	
+	}
+		
+	return countriesMerged;
 }
 // Divide y venceras
 // Llegar a divisiones de k paises donde en cada uno voy agregando un color
