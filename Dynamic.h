@@ -3,7 +3,9 @@
 #include "Strategy.h"
 #include "ColorBucket.h"
 
-class Dynamic :public Strategy {
+class Dynamic : public Strategy 
+{
+private:
 	vector<ColorBucket*> buckets;
 	int currentBucket = 0;
 	int paintedCountries = 0;

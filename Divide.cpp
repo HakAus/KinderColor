@@ -1,8 +1,9 @@
 #include "Divide.h"
 
 
-Divide::Divide(Observer * pObserver)
+Divide::Divide(Observer* pObserver, MemoryPainter* pMemoryPainter)
 {
+	this->memoryPainter = pMemoryPainter;
 	this->fileName = "WorldDivide&Conquer.svg";
 	this->observer = pObserver;
 }
@@ -74,7 +75,7 @@ void Divide::conquer(vector<Country*> pCountries, int pColorAmount)
 			unordered_set<string>::iterator it = countryColors[country->getId()].begin();
 			advance(it,pos);
 			string color = *it;
-			country->setColor(color);
+			memoryPainter->push_back(pair<string,Country*>(color,country));
 			countryColors[country->getId()].erase(it);
 			unordered_set<string> copy(countryColors[country->getId()]);
 			updateRestrictions(country->getNeighborsSet(), color);

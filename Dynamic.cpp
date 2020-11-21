@@ -28,7 +28,7 @@ void Dynamic::execute(vector<Country*> pCountries, vector<string> pColorPallete)
 			if (buckets[currentBucket]->tryBucket(country))
 			{
 				string auxcolor = buckets[currentBucket]->getColor();
-				memoryPainter->push_back(pair<string,Country*>(auxcolor,country));
+				memoryPainter->push_back(pair<string,Country*>(auxcolor,country));	// se guarda los paises a pintar en cola de espera
 				pCountries.erase(std::remove(pCountries.begin(), pCountries.end(), country));
 				nextColor();
 				paintedCountries++;
@@ -42,7 +42,7 @@ void Dynamic::execute(vector<Country*> pCountries, vector<string> pColorPallete)
 		}
 		workingCountries = pCountries;
 	}
-	cout << "Sin pintar: " <<  unpaintedCountries(pCountries.size());
+	cout << "Sin pintar: " <<  unpaintedCountries(pCountries.size()) << endl;
 }
 
 int Dynamic::unpaintedCountries(int pVectorSize)

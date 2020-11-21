@@ -4,15 +4,13 @@
 
 class Divide : public Strategy 
 {
-	
+private:
 	typedef vector<Country *>::iterator countryItr;
 	unordered_map<string,unordered_set<string>> countryColors;
 	
 public:
-	Divide(Observer * pObserver);
-
+	Divide(Observer* pObserver, MemoryPainter* pMemoryPainter);
 	void execute(vector<Country*>pCountries, vector<string> pColorPallete);
-	
 	void divide(vector<Country*> pCountries, countryItr pStart, countryItr pEnd, int pColorAmount);
 	void conquer(vector<Country*> pCountries, int pColorAmount);
 	vector<Country*> merge(vector<vector<Country*>> pCountrySections);

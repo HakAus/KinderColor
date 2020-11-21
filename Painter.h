@@ -12,7 +12,7 @@ private:
 	string fileName;
 	XMLDocument * worldFile;
 	CoordinateSystem* coordinateSystem;
-	MemoryPainter* memorryPainter;
+	MemoryPainter* memoryPainter;
 	bool* started;
 public:
 	Painter(XMLDocument * pWorldFile);

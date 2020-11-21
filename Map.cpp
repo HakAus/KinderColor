@@ -11,8 +11,7 @@ Map::Map(bool* pt)//Ejemplo de como se inicia ya con el thread
 	coordinateSystem->prepareToPaint();
 	alreadyPainted = 0;
 	memoryPainter = new MemoryPainter();
-	currentStrategy = new Dynamic(this,memoryPainter);
-	painter = new Painter(currentStrategy->getFileName(), coordinateSystem, memoryPainter,pt);
+	painterThreadActive = pt;
 }
 
 Map::Map(string pStrategy, int pColorAmount)
@@ -60,6 +59,8 @@ void Map::paint()
 		vector<string>::iterator it = pallete.begin();
 		advance(it,colorAmount);
 		vector<string> userPallete(pallete.begin(), it);
+
+		cout << "La paleta de colores contiene " << userPallete.size() << " colores" << endl;
 		if (colorAmount >= 3 && colorAmount <= 11)
 		{
 			string strategy;
@@ -72,24 +73,25 @@ void Map::paint()
 
 			switch (chosenStrategy) {
 				case 1:{
-					currentStrategy = new BackTracking(this);
+					currentStrategy = new BackTracking(this, memoryPainter);
 					break;
 				}
 				case 2:{
-					currentStrategy = new Divide(this);
+					currentStrategy = new Divide(this, memoryPainter);
 					break;
 				}
 				case 3:{
-					currentStrategy = new Dynamic(this);
+					currentStrategy = new Dynamic(this, memoryPainter);
 					break;
 				}
 				default:{
 					break;
 				}
 			}
+			painter = new Painter(currentStrategy->getFileName(), coordinateSystem, memoryPainter,painterThreadActive);
 			painter->startThread();
 			currentStrategy->execute(prepareToPaint(), userPallete);
-			cout << "Finished!" << endl;
+			option = "s";
 		}
 		else 
 			cout << "Debe ingresar una cantidad de 3 a 11" << endl;

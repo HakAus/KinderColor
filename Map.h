@@ -9,11 +9,12 @@
 class Map : Observer {
 
 private:
+	bool* painterThreadActive;
 	XMLDocument* worldFile;
 	CoordinateSystem* coordinateSystem;
-	vector<string> pallete = {"FF4533","47FF33","F6FF33","#33FFE4","#0851CF",
-						   "#D100E0","#FFBB00","#097D2F","#75493B","#4300C9",
-						   "#E394CC"};
+	vector<string> pallete = {"#FF4533","#47FF33","#F6FF33","#33FFE4","#0851CF",
+						      "#D100E0","#FFBB00","#097D2F","#75493B","#4300C9",
+						      "#E394CC"};
 	int colorAmount;
 	Strategy * currentStrategy;
 	MemoryPainter* memoryPainter;

@@ -47,7 +47,7 @@ void BackTracking::tryToPaint(Country* pCountry, string color)//Podia ser un met
 {
 	if (pCountry->canUseColor(color)) {
 		bool paint = true;
-		for (auto pair : pCountry->getNeighbors()) {
+		for (auto pair : pCountry->getNeighborsHash()) {
 			if (pair.second->getColor() == color) {
 				paint = false;
 				break;
