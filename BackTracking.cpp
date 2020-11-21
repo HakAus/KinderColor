@@ -45,7 +45,25 @@ void BackTracking::bruteForce(vector<Country*> pVector, std::vector<Country*>::i
 
 void BackTracking::tryToPaint(Country* pCountry, string color)//Podia ser un metodo que tuviera el country, pero solo va a ser usado aca
 {
-	if (pCountry->canUseColor(color)) {
+	if (pCountry->canUseColor(colorPallete[currentColor]))
+	{
+		bool paint = true;
+		for (auto pair : pCountry->getNeighbors()) {
+			if (pair.second->getBtColor() == colorPallete[currentColor]) {
+				paint = false;
+				break;
+			}
+		}
+		if (paint) {
+			pCountry->setBtColor(colorPallete[currentColor]);
+			memoryPainter->push_back(pair<string, Country*>(colorPallete[currentColor], pCountry));
+		}
+		else
+			pCountry->removeAvailableColor(colorPallete[currentColor]);
+		nextColor();
+	}
+	else if (pCountry->canUseColor(color)) 
+	{
 		bool paint = true;
 		for (auto pair : pCountry->getNeighbors()) {
 			if (pair.second->getBtColor() == color) {
@@ -61,6 +79,10 @@ void BackTracking::tryToPaint(Country* pCountry, string color)//Podia ser un met
 			pCountry->removeAvailableColor(color);
 	}
 }
-//No hay una buena distribucion de colores
-//El algoritmo dura demasiado o falla con 4 colores, seguramente al aumento de pruebas del ciclo
-//Puede que se necesite una poda mas significativa
+void BackTracking::nextColor()
+{
+	if (currentColor != colorPallete.size() - 1)
+		currentColor++;
+	else
+		currentColor = 0;
+}
