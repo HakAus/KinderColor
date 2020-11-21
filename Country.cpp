@@ -5,6 +5,7 @@ Country::Country(string pId, string pName)
 	this->id = pId;
 	this->name = pName;
 	this->color = "#f2f2f2";//Se puede hacer un hash de colores para manejarlos por key (Tipo diccionario)
+	this->btColor = "#f2f2f2";
 }
 
 void Country::addNeighbor(Country * pNeighbor)
@@ -76,6 +77,21 @@ void Country::removeAvailableColor(string color)
 bool Country::canUseColor(string pColor)
 {
 	return (std::find(availableColors.begin(), availableColors.end(), pColor) != availableColors.end());
+}
+
+void Country::setBtColor(string pColor)
+{
+	btColor = pColor;
+}
+
+string Country::getBtColor()
+{
+	return btColor;
+}
+
+bool Country::isBtColored()
+{
+	return btColor != "#f2f2f2";
 }
 
 string Country::getId()

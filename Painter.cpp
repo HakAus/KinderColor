@@ -20,7 +20,7 @@ void Painter::run()
 	cout << "Hola";
 	while (*started)
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		std::this_thread::sleep_for(std::chrono::seconds(4));
 		memorryPainter->paint();
 		paintWorld();
 	}

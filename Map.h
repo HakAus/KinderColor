@@ -11,7 +11,7 @@ private:
 	XMLDocument* worldFile;
 	CoordinateSystem* coordinateSystem;
 	int colorAmount;
-	vector<string> pallete = { "#FA9278","#F87765","#000000","#237d7a","#877548"};
+	vector<string> pallete = { "#FA9278","#fcba03","#000000","#237d7a","#877548"};
 	Strategy * currentStrategy;
 	MemoryPainter* memoryPainter;
 	Painter* painter;

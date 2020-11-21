@@ -12,7 +12,7 @@ Map::Map(bool* pt)//Ejemplo de como se inicia ya con el thread
 	colorAmount = 3;
 	alreadyPainted = 0;
 	memoryPainter = new MemoryPainter();
-	currentStrategy = new Dynamic(this,memoryPainter);
+	currentStrategy = new BackTracking(this,memoryPainter);
 	painter = new Painter(currentStrategy->getFileName(), coordinateSystem, memoryPainter,pt);
 }
 

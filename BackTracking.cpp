@@ -27,9 +27,9 @@ void BackTracking::bruteForce(vector<Country*> pVector, std::vector<Country*>::i
 			Country* currentCountry = *currentIterator;
 			for (const auto& color : colorPallete)
 			{
-				if (currentCountry->isAvailableColor() && !currentCountry->isColored()) {
+				if (currentCountry->isAvailableColor() && !currentCountry->isBtColored()) {
 					tryToPaint(currentCountry, color);
-					if (currentCountry->isColored())
+					if (currentCountry->isBtColored())
 					{
 						bruteForce(vector<Country*>(next(currentIterator), pVector.end()), pFirstCountry);
 					}
@@ -48,13 +48,15 @@ void BackTracking::tryToPaint(Country* pCountry, string color)//Podia ser un met
 	if (pCountry->canUseColor(color)) {
 		bool paint = true;
 		for (auto pair : pCountry->getNeighbors()) {
-			if (pair.second->getColor() == color) {
+			if (pair.second->getBtColor() == color) {
 				paint = false;
 				break;
 			}
 		}
-		if (paint)
+		if (paint) {
+			pCountry->setBtColor(color);
 			memoryPainter->push_back(pair<string, Country*>(color, pCountry));
+		}
 		else
 			pCountry->removeAvailableColor(color);
 	}
