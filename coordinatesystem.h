@@ -1,6 +1,6 @@
+#pragma once
 #include <unordered_map>
 #include "Country.h"
-#include "Painter.h"
 #include "Includes.h"
 
 using namespace std; 
@@ -29,5 +29,5 @@ public:
 	void printCountryColor();
 	void addCountry(Country * pCountry);
 	vector<Country *> prepareToPaint();
-	void paintProgress(const char * pFileName);
+	unordered_map<string, Country*> getHash();
 };

@@ -33,7 +33,6 @@ void ColorBucket::addToBucketRestrictions(unordered_map<string, Country*> pRestr
 void ColorBucket::addToBucketCountries(Country* pCountry)
 {
 	bucketCountries.push_back(pCountry);
-	pCountry->setColor(bucketColor);
 	addToBucketRestrictions(pCountry->getNeighbors());
 }
 
@@ -50,4 +49,9 @@ int ColorBucket::getBucketRestrictionSize()
 int ColorBucket::getBucketWeight()
 {
 	return getBucketSize() + getBucketRestrictionSize();
+}
+
+string ColorBucket::getColor()
+{
+	return bucketColor;
 }

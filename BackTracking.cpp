@@ -20,7 +20,6 @@ void BackTracking::execute(vector<Country*> pCountries, vector<string> pColorPal
 
 void BackTracking::bruteForce(vector<Country*> pVector, std::vector<Country*>::iterator pFirstCountry) {
 	std::vector<Country*>::iterator currentIterator = pVector.begin();
-	cout << "Hagp";
 	if (currentIterator != pVector.end())
 	{
 		if (!endOfAlgorithm) {

@@ -18,4 +18,5 @@ public:
 	int getBucketSize();
 	int getBucketRestrictionSize();
 	int getBucketWeight();
+	string getColor();
 };
