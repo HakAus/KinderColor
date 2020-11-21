@@ -90,8 +90,10 @@ void Map::paint()
 			}
 			painter = new Painter(currentStrategy->getFileName(), coordinateSystem, memoryPainter,painterThreadActive);
 			painter->startThread();
+			cout << "Siguio" << endl;
 			currentStrategy->execute(prepareToPaint(), userPallete);
-			option = "s";
+			while (!memoryPainter->hasFinished()){}
+    		cout << "Finished!" << endl;
 		}
 		else 
 			cout << "Debe ingresar una cantidad de 3 a 11" << endl;

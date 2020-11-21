@@ -14,6 +14,7 @@ private:
 	CoordinateSystem* coordinateSystem;
 	MemoryPainter* memoryPainter;
 	bool* started;
+	thread instance;
 public:
 	Painter(XMLDocument * pWorldFile);
 	Painter(string pfilename,CoordinateSystem * pCoordinateSystem,MemoryPainter * pMemoryPainter,bool* pt);

@@ -15,7 +15,7 @@ void BackTracking::execute(vector<Country*> pCountries, vector<string> pColorPal
 	}
 	std::vector<Country*>::iterator firstVectorElement = pCountries.begin();
 	bruteForce(pCountries, firstVectorElement);
-	cout << "End";
+	memoryPainter->finish();
 	notify();
 }
 
@@ -27,9 +27,9 @@ void BackTracking::bruteForce(vector<Country*> pVector, std::vector<Country*>::i
 			Country* currentCountry = *currentIterator;
 			for (const auto& color : colorPallete)
 			{
-				if (currentCountry->isAvailableColor() && !currentCountry->isColored()) {
+				if (currentCountry->isAvailableColor() && !currentCountry->isBtColored()) {
 					tryToPaint(currentCountry, color);
-					if (currentCountry->isColored())
+					if (currentCountry->isBtColored())
 					{
 						bruteForce(vector<Country*>(next(currentIterator), pVector.end()), pFirstCountry);
 					}
@@ -45,20 +45,44 @@ void BackTracking::bruteForce(vector<Country*> pVector, std::vector<Country*>::i
 
 void BackTracking::tryToPaint(Country* pCountry, string color)//Podia ser un metodo que tuviera el country, pero solo va a ser usado aca
 {
-	if (pCountry->canUseColor(color)) {
+	if (pCountry->canUseColor(colorPallete[currentColor]))
+	{
 		bool paint = true;
 		for (auto pair : pCountry->getNeighborsHash()) {
-			if (pair.second->getColor() == color) {
+			if (pair.second->getBtColor() == colorPallete[currentColor]) {
 				paint = false;
 				break;
 			}
 		}
-		if (paint)
+		if (paint) {
+			pCountry->setBtColor(colorPallete[currentColor]);
+			memoryPainter->push_back(pair<string, Country*>(colorPallete[currentColor], pCountry));
+		}
+		else
+			pCountry->removeAvailableColor(colorPallete[currentColor]);
+		nextColor();
+	}
+	else if (pCountry->canUseColor(color)) 
+	{
+		bool paint = true;
+		for (auto pair : pCountry->getNeighborsHash()) {
+			if (pair.second->getBtColor() == color) {
+				paint = false;
+				break;
+			}
+		}
+		if (paint) {
+			pCountry->setBtColor(color);
 			memoryPainter->push_back(pair<string, Country*>(color, pCountry));
+		}
 		else
 			pCountry->removeAvailableColor(color);
 	}
 }
-//No hay una buena distribucion de colores
-//El algoritmo dura demasiado o falla con 4 colores, seguramente al aumento de pruebas del ciclo
-//Puede que se necesite una poda mas significativa
+void BackTracking::nextColor()
+{
+	if (currentColor != colorPallete.size() - 1)
+		currentColor++;
+	else
+		currentColor = 0;
+}

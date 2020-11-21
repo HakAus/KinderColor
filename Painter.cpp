@@ -13,14 +13,18 @@ Painter::Painter(string pfilename, CoordinateSystem* pCoordinateSystem, MemoryPa
 	coordinateSystem = pCoordinateSystem;
 	memoryPainter = pMemoryPainter;
 	started = pt;
+
 }
 
 void Painter::run()
 {
-	cout << "Hola";
+	cout << "La variable esta " << *started << endl;
 	while (*started)
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(1));
+		if (memoryPainter->hasFinished()){
+			*started = false;
+		}
 		memoryPainter->paint();
 		paintWorld();
 	}
@@ -28,7 +32,7 @@ void Painter::run()
 
 void Painter::startThread()
 {
-	cout << "StartThread" << endl;
+	cout << "Thread started" << endl;
 	std::thread painterThread(&Painter::run,this);
 	painterThread.detach();
 }

@@ -42,6 +42,7 @@ void Dynamic::execute(vector<Country*> pCountries, vector<string> pColorPallete)
 		}
 		workingCountries = pCountries;
 	}
+	memoryPainter->finish();
 	cout << "Sin pintar: " <<  unpaintedCountries(pCountries.size()) << endl;
 }
 

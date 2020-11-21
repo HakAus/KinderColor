@@ -13,6 +13,7 @@ void Divide::execute (vector<Country*> pCountries, vector<string> pColorPallete)
 	srand(time(NULL));	// Para tener variedad de colores.
 	prepareColors(pCountries, pColorPallete);
 	divide(pCountries, pCountries.begin(), pCountries.end(), pColorPallete.size());
+	memoryPainter->finish();
 }
 
 void Divide::prepareColors(vector<Country*> pCountries, vector<string> pColorPallete)
