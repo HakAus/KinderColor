@@ -12,7 +12,7 @@ Map::Map()
 	coordinateSystem->prepareToPaint();
 	colorAmount = 3;
 	alreadyPainted = 0;
-	currentStrategy = new Dynamic(this);
+	currentStrategy = new BackTracking(this);
 }
 
 Map::Map(string pStrategy, int pColorAmount)

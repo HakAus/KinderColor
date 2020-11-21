@@ -19,6 +19,7 @@ private:
 	unordered_map<string, Country*> neighbors;
 	string color;
 	int conections;
+	vector<string> availableColors;
 	
 public:
 	Country(string pId, string pName);
@@ -33,4 +34,8 @@ public:
 	unordered_map<string, Country*> getNeighbors();
 	bool isColored();
 	void unPaint();
+	void setAvailableColors(vector<string> pColors);
+	bool isAvailableColor();
+	void removeAvailableColor(string pColor);
+	bool canUseColor(string pColor);
 };
