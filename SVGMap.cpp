@@ -6,7 +6,12 @@
 
 int main()
 {
-    Map* map = new Map();
+    bool painterThread = true;
+    bool* pt = &painterThread;
+    Map* map = new Map(pt);
     map->paint();
+    while (painterThread) {
+        this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
     return 0;
 }

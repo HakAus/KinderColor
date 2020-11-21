@@ -1,9 +1,36 @@
 #include "Painter.h"
 #include "Utilities.h"
+#include <iostream>
 
 Painter::Painter(XMLDocument * pWorldFile)
 {
 	worldFile = pWorldFile;	
+}
+
+Painter::Painter(string pfilename, CoordinateSystem* pCoordinateSystem, MemoryPainter* pMemoryPainter,bool* pt)
+{
+	fileName = pfilename;
+	coordinateSystem = pCoordinateSystem;
+	memorryPainter = pMemoryPainter;
+	started = pt;
+}
+
+void Painter::run()
+{
+	cout << "Hola";
+	while (*started)
+	{
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		memorryPainter->paint();
+		paintWorld();
+	}
+}
+
+void Painter::startThread()
+{
+	cout << "StartThread";
+	std::thread painterThread(&Painter::run,this);
+	painterThread.detach();
 }
 
 void Painter::paintCountry(string pCountryId, string pColor)
@@ -33,9 +60,9 @@ void Painter::paintCountry(string pCountryId, string pColor)
 	worldFile->SaveFile("world.svg");
 }
 
-void Painter::paintWorld(unordered_map<string,Country*> pWorld,string  pFileName)//Modo Chambon
+void Painter::paintWorld()//Modo Chambon
 {
-	cout << "Pintando Archivo "<<pFileName <<endl;
+	unordered_map<string, Country*> world = coordinateSystem->getHash();
 	XMLDocument * test = new XMLDocument();
 	test->LoadFile("worldTest.svg");
 	XMLElement* svgRoot = test->FirstChildElement();
@@ -49,7 +76,7 @@ void Painter::paintWorld(unordered_map<string,Country*> pWorld,string  pFileName
 		if (AttributeText != nullptr)
 		{
 			value = AttributeText;
-			color = "fill:" + pWorld.at(value)->getColor() + ";fill-rule:evenodd";
+			color = "fill:" + world.at(value)->getColor() + ";fill-rule:evenodd";
 			ptrPaths->SetAttribute("style", color.c_str());
 			ptrPaths = ptrPaths->NextSiblingElement("path");
 		}
@@ -57,6 +84,6 @@ void Painter::paintWorld(unordered_map<string,Country*> pWorld,string  pFileName
 			cout << "ERROR en lectura de SVG" << endl;
 		}
 	}
-	char* fileName = &pFileName[0];
-	test->SaveFile(fileName);
+	char* cFileName = &fileName[0];
+	test->SaveFile(cFileName);
 }

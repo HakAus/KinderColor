@@ -2,8 +2,7 @@
 #include "Divide.h"
 #include "Dynamic.h"
 #include "BackTracking.h"
-
-Map::Map()
+Map::Map(bool* pt)//Ejemplo de como se inicia ya con el thread
 {
 	worldFile = new XMLDocument();
 	coordinateSystem = new CoordinateSystem();
@@ -11,7 +10,9 @@ Map::Map()
 	coordinateSystem->printCountryData();
 	coordinateSystem->prepareToPaint();
 	alreadyPainted = 0;
-	// currentStrategy = new Dynamic(this);
+	memoryPainter = new MemoryPainter();
+	currentStrategy = new Dynamic(this,memoryPainter);
+	painter = new Painter(currentStrategy->getFileName(), coordinateSystem, memoryPainter,pt);
 }
 
 Map::Map(string pStrategy, int pColorAmount)
@@ -86,6 +87,7 @@ void Map::paint()
 					break;
 				}
 			}
+			painter->startThread();
 			currentStrategy->execute(prepareToPaint(), userPallete);
 			cout << "Finished!" << endl;
 		}
@@ -95,8 +97,4 @@ void Map::paint()
 	cout << "Adios!" << endl;
 }
 
-void Map::update()
-{
-	coordinateSystem->paintProgress(currentStrategy->getFileName().c_str());
-}
 

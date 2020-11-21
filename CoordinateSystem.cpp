@@ -149,10 +149,11 @@ vector<Country *> CoordinateSystem::prepareToPaint()
     return countries;
 }
 
-void CoordinateSystem::paintProgress(const char * pFileName)
+unordered_map<string, Country*> CoordinateSystem::getHash()
 {
-    Painter::paintWorld(countryHash,pFileName);
+    return countryHash;
 }
+
 
 void CoordinateSystem::addToSquareHash(std::string pSquareKey, Country* pCountry) 
 {   

@@ -9,9 +9,8 @@ class Dynamic :public Strategy {
 	int paintedCountries = 0;
 	int totalCountries;
 public:
-	Dynamic(Observer* pObserver);
+	Dynamic(Observer* pObserver,MemoryPainter * memPainter);
 	void execute(vector<Country*>pCountries, vector<string> pColorPallete);
-	void findBucket(Country* pCountry);
 	int unpaintedCountries(int pVectorSize);
 	void nextColor();
 };

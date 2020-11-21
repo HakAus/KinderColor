@@ -77,6 +77,26 @@ void Country::unPaint()
 	setColor("#f2f2f2");
 }
 
+void Country::setAvailableColors(vector<string> pColors)
+{
+	availableColors = pColors;
+}
+
+bool Country::isAvailableColor()
+{
+	return !availableColors.empty();
+}
+
+void Country::removeAvailableColor(string color)
+{
+	availableColors.erase(std::remove(availableColors.begin(), availableColors.end(), color));
+}
+
+bool Country::canUseColor(string pColor)
+{
+	return (std::find(availableColors.begin(), availableColors.end(), pColor) != availableColors.end());
+}
+
 string Country::getId()
 {
 	return id;
