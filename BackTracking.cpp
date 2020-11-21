@@ -1,7 +1,8 @@
 #include "BackTracking.h"
 
-BackTracking::BackTracking(Observer* pObserver)
+BackTracking::BackTracking(Observer* pObserver, MemoryPainter* pMemoryPainter)
 {
+	this->memoryPainter = pMemoryPainter;
 	this->fileName = "WorldBackTracking.svg";
 	this->observer = pObserver;
 }
@@ -53,7 +54,7 @@ void BackTracking::tryToPaint(Country* pCountry, string color)//Podia ser un met
 			}
 		}
 		if (paint)
-			pCountry->setColor(color);
+			memoryPainter->push_back(pair<string, Country*>(color, pCountry));
 		else
 			pCountry->removeAvailableColor(color);
 	}

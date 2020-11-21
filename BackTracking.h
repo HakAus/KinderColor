@@ -13,6 +13,6 @@ private:
 	void tryToPaint(Country* pCountry, string color);
 
 public:
-	BackTracking(Observer* pObserver);
+	BackTracking(Observer* pObserver, MemoryPainter* pMemoryPainter);
 	void execute(vector<Country*>pCountries, vector<string> pColorPallete);
 };
