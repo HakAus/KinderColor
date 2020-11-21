@@ -99,6 +99,7 @@ bool squareComparator(tuple<string,set<Country*>> pFirstSquare, tuple<string,set
 }
 void CoordinateSystem::addCountry(Country * pCountry)
 {
+    countries.push_back(pCountry);
     countryHash[pCountry->getId()] = pCountry;
 }
 
@@ -149,7 +150,10 @@ vector<Country *> CoordinateSystem::prepareToPaint()
 void CoordinateSystem::addToSquareHash(std::string pSquareKey, Country* pCountry) 
 {   
 	squareHash[pSquareKey].insert(pCountry);
-    if (squareHash[pSquareKey].size() > 1)
+    // Si la celda tiene al menos 2 paises colindantes
+    // se procede a agregar a la lista de vecinos de 
+    // de cada pais entre si.
+    if (squareHash[pSquareKey].size() > 1)  
     {
         set<Country*>::iterator itr;
         for (itr = squareHash[pSquareKey].begin(); itr != squareHash[pSquareKey].end(); itr++)
@@ -200,15 +204,15 @@ void CoordinateSystem::printSquareData()
 
 void CoordinateSystem::printCountryData()
 {
-    for (auto pair : countryHash)
-    {
-        std::cout << pair.first << " [";
-        for (auto country : pair.second->getNeighbors())
-        {
-            std::cout << country.first << " ";
-        }
-        std::cout << "]" << std::endl;
-    }
+    // for (auto pair : countryHash)
+    // {
+    //     std::cout << pair.first->getId() << " [";
+    //     for (auto country : pair.second->getNeighbors())
+    //     {
+    //         std::cout << country.first->getId() << " ";
+    //     }
+    //     std::cout << "]" << std::endl;
+    // }
 }
 
 void CoordinateSystem::printCountryColor()

@@ -12,5 +12,10 @@
 #include <map>
 #include <cmath>
 #include <stack>
+#include <unordered_set>
+#include <cstring>
+#include <string>
+#include <unordered_map>
+#include <ctime>
 using namespace std; 
 using namespace tinyxml2;

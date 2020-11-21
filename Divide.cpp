@@ -2,19 +2,29 @@
 
 void Divide::execute (vector<Country*> pCountries, int pColorAmount)
 {
+	srand(time(NULL));
+	prepareColors(pCountries, pColorAmount);
 	divide(pCountries, pCountries.begin(), pCountries.end(), pColorAmount);
 
-	for (auto country : pCountries)
-	{
-		cout << country->getName() << ": " << country->getColor() << endl;
-	}
 	painter->paintCountries(pCountries);
+}
+
+void Divide::prepareColors(vector<Country*> pCountries, int pColorAmount)
+{
+	unordered_set<string> colors;
+	for (int colorIndex = 0; colorIndex < pColorAmount; colorIndex++){
+		colors.insert(pallete[colorIndex]);
+	}
+
+	for (const auto& country : pCountries)
+		countryColors[country->getId()] = unordered_set<string>(colors);	
 }
 
 void Divide::setPainter(Painter* pPainter)
 {
 	painter = pPainter;
 }
+
 void Divide::divide(vector<Country*> pCountries, countryItr pStart, countryItr pEnd, int pColorAmount)
 {
 	//211 / 3 = 70
@@ -22,6 +32,7 @@ void Divide::divide(vector<Country*> pCountries, countryItr pStart, countryItr p
 	{
 		conquer(pCountries, pColorAmount);
 	}
+
 	else {
 		int blockSize = distance(pStart,pEnd) / pColorAmount;
 		blockSize += distance(pStart,pEnd) % pColorAmount;
@@ -51,62 +62,38 @@ void Divide::divide(vector<Country*> pCountries, countryItr pStart, countryItr p
 			divide(list, list.begin(), list.end(),pColorAmount);
 		}
 	}
-	
-	// return merge(countries);
-
-	
-	/* PRINT
-	for (const auto& section : sections)
-	{
-		countryItr begin = section.first;
-		countryItr end = section.second;
-		countryItr step = begin;
-		cout << "[";
-		for (; step != end; step++)
-		{
-			cout << (*step)->getId() << " ";
-		}
-		// cout << (*step)->getId();
-		cout << "]" << distance(begin,end) << endl;
-	}*/
 }
 
 void Divide::conquer(vector<Country*> pCountries, int pColorAmount)
 {
 	for (auto country : pCountries)
 	{
-		tryColor(country, pColorAmount);
-	}
-}
-
-void Divide::tryColor(Country* pCountry, int pColorAmount)
-{
-	bool colorAssigned = false;
-	for (int colorIndex = 0; colorIndex < pColorAmount; colorIndex++)
-	{
-		vector<string>::iterator first = pCountry->getRestrictedColors().begin();
-		vector<string>::iterator last = pCountry->getRestrictedColors().end();
-		if (find(first,last, pallete[colorIndex]) == last)
-		{	
-			colorAssigned = true;
-			pCountry->setColor(pallete[colorIndex]);
-			// Significa que el color no esta en la lista de restricciones, entonces lo
-			// asigna a si mismo y lo agrega como restriccion a sus vecinos
-			unordered_map<string, Country*> neighbors = pCountry->getNeighbors();
-			for (auto neighbor : neighbors)
-			{
-				neighbor.second->addColorRestriction(pallete[colorIndex]);
-			}
-			break;
+		if (!country->isPainted() && !countryColors[country->getId()].empty())
+		{
+			int pos = rand() % countryColors[country->getId()].size();
+			unordered_set<string>::iterator it = countryColors[country->getId()].begin();
+			advance(it,pos);
+			string color = *it;
+			country->setColor(color);
+			countryColors[country->getId()].erase(it);
+			unordered_set<string> copy(countryColors[country->getId()]);
+			updateRestrictions(country->getNeighbors(), color);
+		}
+		else {
+			country->setColor("#FFFFFF");
 		}
 	}
-	if (!colorAssigned)
-	{
-		pCountry->setColor("#FFFFFF");
-		// cout << pCountry->getName() << ": Color = #FFFFFF" << endl;
-	}
-
 }
+
+void Divide::updateRestrictions(set<Country*> pNeighbors, string pColor)
+{
+	for (auto country : pNeighbors){
+		if (!country->isPainted()){
+			countryColors[country->getId()].erase(pColor);
+		}
+	}
+}
+
 
 vector<Country*> Divide::merge(vector<vector<Country*>> pCountrySections)
 {

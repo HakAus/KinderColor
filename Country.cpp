@@ -4,22 +4,29 @@ Country::Country(string pId, string pName)
 {
 	this->id = pId;
 	this->name = pName;
+	painted = false;
 }
 
 void Country::addNeighbor(Country * pNeighbor)
 {
-	this->neighbors[pNeighbor->getId()] = pNeighbor;
+	this->neighbors.insert(pNeighbor);
 	pNeighbor->addNeighborAux(this);
 }
 
 void Country::addNeighborAux(Country * pNeighbor)
 {
-	this->neighbors[pNeighbor->getId()] = pNeighbor;
+	this->neighbors.insert(pNeighbor);
 }
 
 void Country::setColor(string pColor)
 {
 	this->color = pColor;
+	this->painted = true;
+}
+
+bool Country::isPainted()
+{
+	return this->painted;
 }
 
 int Country::getConections()
@@ -52,7 +59,7 @@ string Country::getColor()
 	return this->color;
 }
 
-unordered_map<string, Country*> Country::getNeighbors()
+set<Country*> Country::getNeighbors()
 {
 	return this->neighbors;
 }

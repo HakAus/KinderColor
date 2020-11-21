@@ -1,12 +1,5 @@
 #pragma once
-#include <vector>
-#include <tuple>
-#include <cstring>
-#include <cctype>
-#include <string>
-#include <iostream>
-#include <unordered_map>
-
+#include "Includes.h"
 
 using namespace std;
 
@@ -16,9 +9,10 @@ private:
 
 	string id;
 	string name;
+	bool painted;
 	string color;
 	vector<string> restrictedColors;
-	unordered_map<string, Country*> neighbors;
+	set<Country*> neighbors;
 	int conections;//Se puede agregar un campo conexiones que se modifica mientras avanza el algoritmo lo que hace que se reoordenen los ponderados
 	
 public:
@@ -34,5 +28,6 @@ public:
 	string getColor();
 	string getId();
 	string getName();
-	unordered_map<string, Country*> getNeighbors();
+	bool isPainted();
+	set<Country*> getNeighbors();
 };
