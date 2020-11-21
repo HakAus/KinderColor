@@ -7,6 +7,7 @@ class Dynamic :public Strategy {
 	vector<ColorBucket*> buckets;
 	int currentBucket = 0;
 	int paintedCountries = 0;
+	int totalCountries;
 public:
 	Dynamic(Observer* pObserver);
 	void execute(vector<Country*>pCountries, vector<string> pColorPallete);
