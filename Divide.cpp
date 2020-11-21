@@ -1,28 +1,28 @@
 #include "Divide.h"
 
-void Divide::execute (vector<Country*> pCountries, int pColorAmount)
-{
-	srand(time(NULL));
-	prepareColors(pCountries, pColorAmount);
-	divide(pCountries, pCountries.begin(), pCountries.end(), pColorAmount);
 
-	painter->paintCountries(pCountries);
+Divide::Divide(Observer * pObserver)
+{
+	this->fileName = "WorldDivide&Conquer.svg";
+	this->observer = pObserver;
 }
 
-void Divide::prepareColors(vector<Country*> pCountries, int pColorAmount)
+void Divide::execute (vector<Country*> pCountries, vector<string> pColorPallete)
 {
-	unordered_set<string> colors;
+	srand(time(NULL));	// Para tener variedad de colores.
+	prepareColors(pCountries, pColorPallete);
+	divide(pCountries, pCountries.begin(), pCountries.end(), pColorPallete.size());
+}
+
+void Divide::prepareColors(vector<Country*> pCountries, vector<string> pColorPallete)
+{
+	/*unordered_set<string> colors;
 	for (int colorIndex = 0; colorIndex < pColorAmount; colorIndex++){
-		colors.insert(pallete[colorIndex]);
-	}
+		colors.insert(pColorPallete[colorIndex]);
+	}*/
 
-	for (const auto& country : pCountries)
-		countryColors[country->getId()] = unordered_set<string>(colors);	
-}
-
-void Divide::setPainter(Painter* pPainter)
-{
-	painter = pPainter;
+	for (const auto& country : pCountries) // TODO: Porbar creacion con iteradores
+		countryColors[country->getId()] = unordered_set<string>(pColorPallete.begin(), pColorPallete.end());	
 }
 
 void Divide::divide(vector<Country*> pCountries, countryItr pStart, countryItr pEnd, int pColorAmount)
@@ -77,7 +77,7 @@ void Divide::conquer(vector<Country*> pCountries, int pColorAmount)
 			country->setColor(color);
 			countryColors[country->getId()].erase(it);
 			unordered_set<string> copy(countryColors[country->getId()]);
-			updateRestrictions(country->getNeighbors(), color);
+			updateRestrictions(country->getNeighborsSet(), color);
 		}
 		else {
 			country->setColor("#FFFFFF");
@@ -108,14 +108,3 @@ vector<Country*> Divide::merge(vector<vector<Country*>> pCountrySections)
 		
 	return countriesMerged;
 }
-// Divide y venceras
-// Llegar a divisiones de k paises donde en cada uno voy agregando un color
-// avisando a los paises vecinos de la nueva restriccion
-// luego en el proceso de combinacion se identifican los paises colindantes y se 
-// ve si hay conflicto antes de unirlos o si hay que repintar paises
-
-// Programacion dinamica
-// Es basicamente la misma idea de ir avisando a los paises vecinos
-// del pais actual de la nueva restriccion de color pero guardando
-// cada restriccion en un hash donde la llave es el pais y el contenido
-// una lista de los colores que tiene restringidos.

@@ -7,6 +7,6 @@
 int main()
 {
     Map* map = new Map();
-    map->start();
+    map->paint();
     return 0;
 }

@@ -5,15 +5,15 @@ using namespace std;
 
 class Country
 {
-private:
 
+private:
 	string id;
 	string name;
 	bool painted;
 	string color;
-	vector<string> restrictedColors;
-	set<Country*> neighbors;
-	int conections;//Se puede agregar un campo conexiones que se modifica mientras avanza el algoritmo lo que hace que se reoordenen los ponderados
+	set<Country*> neighborsSet;
+	unordered_map<string, Country*> neighborsHash;
+	int conections;
 	
 public:
 	Country(string pId, string pName);
@@ -23,11 +23,12 @@ public:
 	int getConections();
 	void setConections();
 	void setConections(int pConections);
-	vector<string> getRestrictedColors();
-	void addColorRestriction(string pColorCode);
 	string getColor();
 	string getId();
 	string getName();
 	bool isPainted();
-	set<Country*> getNeighbors();
+	set<Country*> getNeighborsSet();
+	unordered_map<string, Country*> getNeighborsHash();
+	bool isColored();
+	void unPaint();
 };

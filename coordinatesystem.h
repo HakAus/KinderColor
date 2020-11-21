@@ -1,10 +1,11 @@
 #include <unordered_map>
 #include "Country.h"
+#include "Painter.h"
 #include "Includes.h"
 
 using namespace std; 
 
-class CoordinateSystem
+class CoordinateSystem 
 {
 private:
 
@@ -27,7 +28,6 @@ public:
 	std::tuple<float, float> getTupleFloatValue(const char * pBegin, const char* pComma, const char* pEnd);
 	std::tuple<float, float> tuppleAddition(std::tuple<float, float> pFirstSum, std::tuple<float, float> pSecondSum);
 	std::string getSquare(std::tuple<float, float> pCurrentPoint, int pInterval);
-	void addCountry(Country * pCountry);
 
 	// Painting
 	vector<Country *> prepareToPaint();
@@ -37,4 +37,6 @@ public:
 	void printCountryData();
 	void printCountryColor();
 
+	void addCountry(Country * pCountry);
+	void paintProgress(const char * pFileName);
 };

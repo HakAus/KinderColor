@@ -5,17 +5,20 @@ Country::Country(string pId, string pName)
 	this->id = pId;
 	this->name = pName;
 	painted = false;
+	this->color = "#f2f2f2";//Se puede hacer un hash de colores para manejarlos por key (Tipo diccionario)
 }
 
 void Country::addNeighbor(Country * pNeighbor)
 {
-	this->neighbors.insert(pNeighbor);
+	this->neighborsSet.insert(pNeighbor);
+	this->neighborsHash[pNeighbor->getId()] = pNeighbor;
 	pNeighbor->addNeighborAux(this);
 }
 
 void Country::addNeighborAux(Country * pNeighbor)
 {
-	this->neighbors.insert(pNeighbor);
+	this->neighborsSet.insert(pNeighbor);
+	this->neighborsHash[pNeighbor->getId()] = pNeighbor;
 }
 
 void Country::setColor(string pColor)
@@ -36,7 +39,7 @@ int Country::getConections()
 
 void Country::setConections()
 {
-	this->conections = this->neighbors.size();
+	this->conections = this->neighborsHash.size();
 }
 
 void Country::setConections(int pConections)
@@ -44,29 +47,34 @@ void Country::setConections(int pConections)
 	this->conections = pConections;
 }
 
-vector<string> Country::getRestrictedColors()
-{
-	return this->restrictedColors;
-}
-
-void Country::addColorRestriction(string pColorCode)
-{
-	this->restrictedColors.push_back(pColorCode);
-}
-
 string Country::getColor()
 {
 	return this->color;
 }
 
-set<Country*> Country::getNeighbors()
+set<Country*> Country::getNeighborsSet()
 {
-	return this->neighbors;
+	return this->neighborsSet;
+}
+
+unordered_map<string, Country*> Country::getNeighborsHash()
+{
+	return this->neighborsHash;
 }
 
 string Country::getName()
 {
 	return this->name;
+}
+
+bool Country::isColored()
+{
+	return color != "#f2f2f2";
+}
+
+void Country::unPaint()
+{
+	setColor("#f2f2f2");
 }
 
 string Country::getId()

@@ -1,4 +1,5 @@
 #include "Painter.h"
+#include "Utilities.h"
 
 Painter::Painter(XMLDocument * pWorldFile)
 {
@@ -32,34 +33,30 @@ void Painter::paintCountry(string pCountryId, string pColor)
 	worldFile->SaveFile("world.svg");
 }
 
-void Painter::paintCountries(vector<Country *> pCountries)
+void Painter::paintWorld(unordered_map<string,Country*> pWorld,string  pFileName)//Modo Chambon
 {
-	cout << "Entro" << endl;
-	XMLElement * svgRoot = this->worldFile->FirstChildElement();
-	XMLElement * ptrPaths = svgRoot->FirstChildElement("path");
-	cout << "Aqui" << endl;
+	cout << "Pintando Archivo "<<pFileName <<endl;
+	XMLDocument * test = new XMLDocument();
+	test->LoadFile("worldTest.svg");
+	XMLElement* svgRoot = test->FirstChildElement();
+	XMLElement* ptrPaths = svgRoot->FirstChildElement("path");
+	string color;
 	while (ptrPaths != nullptr)
 	{
 		string value;
-		const char * idAttribute = nullptr;
-		idAttribute = ptrPaths->Attribute("id");
-		if (idAttribute != nullptr)
-		{	
-			string id = string(idAttribute);
-			for (const auto& country : pCountries)
-			{
-				if (country->getId() == id)
-				{
-					string color = "fill:" + country->getColor() + ";fill-rule:evenodd";
-					ptrPaths->SetAttribute("style",color.c_str());
-					break;
-				}
-			}			
+		const char* AttributeText = nullptr;
+		AttributeText = ptrPaths->Attribute("id");
+		if (AttributeText != nullptr)
+		{
+			value = AttributeText;
+			color = "fill:" + pWorld.at(value)->getColor() + ";fill-rule:evenodd";
+			ptrPaths->SetAttribute("style", color.c_str());
 			ptrPaths = ptrPaths->NextSiblingElement("path");
 		}
 		else {
 			cout << "ERROR en lectura de SVG" << endl;
 		}
 	}
-	worldFile->SaveFile("world.svg");
+	char* fileName = &pFileName[0];
+	test->SaveFile(fileName);
 }

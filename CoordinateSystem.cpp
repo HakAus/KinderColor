@@ -49,9 +49,10 @@ void CoordinateSystem::setCountryInSquares(const char* pSvgPath, Country* pCount
     } while (0 != *pSvgPath++);
 }
 
-bool connectionsComparator(Country* pFirstCountry, Country* pSecondCountry) {
+bool connectionsComparator(Country* pFirstCountry, Country* pSecondCountry) 
+{
     return pFirstCountry->getConections() < pSecondCountry->getConections();
-}//No estoy seguro de donde deberia ir esta funcion
+}
 
 bool squareComparator(tuple<string,set<Country*>> pFirstSquare, tuple<string,set<Country*>> pSecondSquare)
 {
@@ -105,6 +106,7 @@ void CoordinateSystem::addCountry(Country * pCountry)
 
 vector<Country *> CoordinateSystem::prepareToPaint()
 {
+
     vector<tuple<string,set<Country*>>> countriesXSquare;
     for (auto pair : squareHash)
     {
@@ -145,6 +147,11 @@ vector<Country *> CoordinateSystem::prepareToPaint()
     cout << "Ultimo: " << get<0>(*it) << endl;
     */
     return countries;
+}
+
+void CoordinateSystem::paintProgress(const char * pFileName)
+{
+    Painter::paintWorld(countryHash,pFileName);
 }
 
 void CoordinateSystem::addToSquareHash(std::string pSquareKey, Country* pCountry) 
