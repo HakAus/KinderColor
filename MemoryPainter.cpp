@@ -10,7 +10,7 @@ void MemoryPainter::paint()
 	while (!colorQueue.empty() && currentIndex < GOING_TO_PAINT) {
 		pair<string, Country*> tempPair = colorQueue.front();
 		tempPair.second->setColor(tempPair.first);
-		cout << tempPair.second->getId();
+		// cout << tempPair.second->getId();
 		colorQueue.pop();
 		currentIndex++;
 	}

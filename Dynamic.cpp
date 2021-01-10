@@ -10,6 +10,8 @@ Dynamic::Dynamic(Observer* pObserver,MemoryPainter * pMemoryPainter)
 
 void Dynamic::execute(vector<Country*> pCountries, vector<string> pColorPallete)
 {
+	auto start = std::chrono::system_clock::now();
+
 	totalCountries = pCountries.size();
 	cout << "Trying to execute" << endl;
 	int palleteSize = pColorPallete.size();
@@ -42,6 +44,10 @@ void Dynamic::execute(vector<Country*> pCountries, vector<string> pColorPallete)
 		}
 		workingCountries = pCountries;
 	}
+
+	auto end = std::chrono::system_clock::now();
+	chrono::duration<float,std::milli> duration = end - start;
+    cout << "\nTiempo: " << duration.count() << " ms" << endl;
 	memoryPainter->finish();
 	cout << "Sin pintar: " <<  unpaintedCountries(pCountries.size()) << endl;
 }

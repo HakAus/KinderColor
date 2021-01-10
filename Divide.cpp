@@ -10,19 +10,19 @@ Divide::Divide(Observer* pObserver, MemoryPainter* pMemoryPainter)
 
 void Divide::execute (vector<Country*> pCountries, vector<string> pColorPallete)
 {
+	
 	srand(time(NULL));	// Para tener variedad de colores.
 	prepareColors(pCountries, pColorPallete);
+	auto start = std::chrono::system_clock::now();
 	divide(pCountries, pCountries.begin(), pCountries.end(), pColorPallete.size());
+	auto end = std::chrono::system_clock::now();
+	chrono::duration<float,std::milli> duration = end - start;
+    cout << "\nTiempo: " << duration.count() << " ms" << endl;
 	memoryPainter->finish();
 }
 
 void Divide::prepareColors(vector<Country*> pCountries, vector<string> pColorPallete)
 {
-	/*unordered_set<string> colors;
-	for (int colorIndex = 0; colorIndex < pColorAmount; colorIndex++){
-		colors.insert(pColorPallete[colorIndex]);
-	}*/
-
 	for (const auto& country : pCountries) // TODO: Porbar creacion con iteradores
 		countryColors[country->getId()] = unordered_set<string>(pColorPallete.begin(), pColorPallete.end());	
 }
@@ -72,9 +72,9 @@ void Divide::conquer(vector<Country*> pCountries, int pColorAmount)
 	{
 		if (!country->isPainted() && !countryColors[country->getId()].empty())
 		{
-			int pos = rand() % countryColors[country->getId()].size();
+			int pos = rand() % countryColors[country->getId()].size(); // opcional
 			unordered_set<string>::iterator it = countryColors[country->getId()].begin();
-			advance(it,pos);
+			advance(it,pos); // opcional
 			string color = *it;
 			memoryPainter->push_back(pair<string,Country*>(color,country));
 			countryColors[country->getId()].erase(it);

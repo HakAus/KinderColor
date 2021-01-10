@@ -9,12 +9,19 @@ BackTracking::BackTracking(Observer* pObserver, MemoryPainter* pMemoryPainter)
 
 void BackTracking::execute(vector<Country*> pCountries, vector<string> pColorPallete)
 {
+	auto start = std::chrono::system_clock::now();
+
 	colorPallete = pColorPallete;
 	for (const auto& country : pCountries) {//Esto lo puede hacer cuando se crean los paises
 		country->setAvailableColors(colorPallete);
 	}
 	std::vector<Country*>::iterator firstVectorElement = pCountries.begin();
 	bruteForce(pCountries, firstVectorElement);
+
+	auto end = std::chrono::system_clock::now();
+	chrono::duration<float,std::milli> duration = end - start;
+    cout << "\nTiempo: " << duration.count() << " ms" << endl;
+
 	memoryPainter->finish();
 	notify();
 }
